@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from saturn.core.views import dummy_endpoint
+from saturn.core.views import dummy_endpoint, dummy_users
 
 urlpatterns = [
     path('api/', dummy_endpoint),
+    path('api/users/', dummy_users),
     path('admin/', admin.site.urls),
 ]

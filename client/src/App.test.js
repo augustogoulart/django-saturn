@@ -3,6 +3,6 @@ import App from "./App";
 
 test('renders learn react link', () => {
   render(<App />);
-  const title = screen.getByText(/API Response/i);
+  const title = screen.getByText(/User/i);
   expect(title).toBeInTheDocument();
 });
