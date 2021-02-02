@@ -1,6 +1,8 @@
 import 'antd/dist/antd.css';
 import { Component } from 'react';
-import { Table, Button, Space } from 'antd';
+import { Table, Button, Space, Menu, Dropdown, message } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+
 
 class SaturnTable extends Component {
   //TODO - There's a lot of User related information here that should be in the User's page.
@@ -44,6 +46,9 @@ class SaturnTable extends Component {
       .then(response => this.setState({data: response.data}))
   }
 
+  onMenuItemClick({key}) {
+    message.info(`User ${key} was deleted`)
+  }
   render() {
     let { sortedInfo, filteredInfo, data } = this.state;
     sortedInfo = sortedInfo || {};
@@ -87,9 +92,19 @@ class SaturnTable extends Component {
         ellipsis: true,
       },
     ];
+
+    const menu = (
+      <Menu onClick={this.onMenuItemClick}>
+        <Menu.Item key={0}>Delete Selected Users</Menu.Item>
+      </Menu>
+    )
+
     return (
       <>
         <Space style={{ marginBottom: 16 }}>
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <Button>Actions<DownOutlined/></Button>
+          </Dropdown>
           <Button onClick={this.setAgeSort}>Sort age</Button>
           <Button onClick={this.clearFilters}>Clear filters</Button>
           <Button onClick={this.clearAll}>Clear filters and sorters</Button>
