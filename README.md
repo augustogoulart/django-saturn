@@ -14,4 +14,4 @@ $ python manage.py runserver
 $ yarn workspace client start
 ```
 
-![admin](docs/admin.png)
+![admin](docs/2021-02-02.png)
