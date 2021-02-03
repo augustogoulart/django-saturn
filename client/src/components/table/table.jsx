@@ -1,7 +1,8 @@
 import 'antd/dist/antd.css';
-import { Component } from 'react';
-import { Table, Button, Space, Menu, Dropdown, message } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import {BuildColumns} from "./columns";
+import {Component} from 'react';
+import {Button, Dropdown, Menu, message, Space, Table} from 'antd';
+import {DownOutlined} from '@ant-design/icons';
 
 
 class SaturnTable extends Component {
@@ -13,7 +14,6 @@ class SaturnTable extends Component {
   };
 
   handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -40,58 +40,20 @@ class SaturnTable extends Component {
     });
   };
 
+  onMenuItemClick({key}) {
+    message.info(`User ${key} was deleted`)
+  }
+
   componentDidMount() {
     fetch('/api/users/')
       .then(response => response.json())
       .then(response => this.setState({data: response.data}))
   }
 
-  onMenuItemClick({key}) {
-    message.info(`User ${key} was deleted`)
-  }
   render() {
     let { sortedInfo, filteredInfo, data } = this.state;
-    sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
 
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        filters: [
-          { text: 'Joe', value: 'Joe' },
-          { text: 'Jim', value: 'Jim' },
-        ],
-        filteredValue: filteredInfo.name || null,
-        onFilter: (value, record) => record.name.includes(value),
-        sorter: (a, b) => a.name.length - b.name.length,
-        sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
-        ellipsis: true,
-      },
-      {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-        sorter: (a, b) => a.age - b.age,
-        sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
-        ellipsis: true,
-      },
-      {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-        filters: [
-          { text: 'London', value: 'London' },
-          { text: 'New York', value: 'New York' },
-        ],
-        filteredValue: filteredInfo.address || null,
-        onFilter: (value, record) => record.address.includes(value),
-        sorter: (a, b) => a.address.length - b.address.length,
-        sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
-        ellipsis: true,
-      },
-    ];
+    const columns = BuildColumns(sortedInfo, filteredInfo)
 
     const menu = (
       <Menu onClick={this.onMenuItemClick}>
