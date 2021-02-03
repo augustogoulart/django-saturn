@@ -109,7 +109,7 @@ class SaturnTable extends Component {
           <Button onClick={this.clearFilters}>Clear filters</Button>
           <Button onClick={this.clearAll}>Clear filters and sorters</Button>
         </Space>
-        <Table columns={columns} dataSource={data} onChange={this.handleChange} />
+        <Table rowSelection={{type: "checkbox"}} columns={columns} dataSource={data} onChange={this.handleChange} />
       </>
     );
   }
