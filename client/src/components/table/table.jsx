@@ -1,17 +1,22 @@
 import 'antd/dist/antd.css';
 import {BuildColumns} from "./columns";
 import {Component} from 'react';
-import {Button, Dropdown, Menu, message, Space, Table} from 'antd';
+import {Button, Dropdown, message, Space, Table} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
+import {Overlay} from "../dropdown-overlay/Overlay";
 
 
-class SaturnTable extends Component {
-  //TODO - There's a lot of User related information here that should be in the User's page.
+class ModelTable extends Component {
   state = {
     filteredInfo: null,
     sortedInfo: null,
     data: null
   };
+
+  columns() {
+    const { sortedInfo, filteredInfo } = this.state;
+    return BuildColumns(sortedInfo, filteredInfo)
+  }
 
   handleChange = (pagination, filters, sorter) => {
     this.setState({
@@ -51,29 +56,21 @@ class SaturnTable extends Component {
   }
 
   render() {
-    let { sortedInfo, filteredInfo, data } = this.state;
-
-    const columns = BuildColumns(sortedInfo, filteredInfo)
-
-    const menu = (
-      <Menu onClick={this.onMenuItemClick}>
-        <Menu.Item key={0}>Delete Selected Users</Menu.Item>
-      </Menu>
-    )
+    const { data } = this.state;
 
     return (
       <>
         <Space style={{ marginBottom: 16 }}>
-          <Dropdown overlay={menu} trigger={["click"]}>
+          <Dropdown overlay={Overlay(this.onMenuItemClick)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
           <Button onClick={this.setAgeSort}>Sort age</Button>
           <Button onClick={this.clearFilters}>Clear filters</Button>
           <Button onClick={this.clearAll}>Clear filters and sorters</Button>
         </Space>
-        <Table rowSelection={{type: "checkbox"}} columns={columns} dataSource={data} onChange={this.handleChange} />
+        <Table rowSelection={{type: "checkbox"}} columns={this.columns()} dataSource={data} onChange={this.handleChange} />
       </>
     );
   }
 }
-export default SaturnTable;
+export default ModelTable;
