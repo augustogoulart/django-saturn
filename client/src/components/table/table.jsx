@@ -30,11 +30,7 @@ class ModelTable extends Component {
     });
   };
 
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
-  clearAll = () => {
+  clearFiltersAndSorters = () => {
     this.setState({
       filteredInfo: null,
       sortedInfo: null,
@@ -76,8 +72,7 @@ class ModelTable extends Component {
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
           <Button onClick={this.setAgeSort}>Sort age</Button>
-          <Button onClick={this.clearFilters}>Clear filters</Button>
-          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+          <Button type={"link"} onClick={this.clearFiltersAndSorters}>Clear</Button>
         </Space>
         <Table
           rowSelection={rowSelection}
