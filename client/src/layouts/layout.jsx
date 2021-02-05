@@ -4,7 +4,7 @@ import {SideMenuDark} from "../components/sidemenu/SideMenu";
 import {Breadcrumb, Layout} from 'antd';
 import {Component} from "react/cjs/react.production.min";
 
-const { Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 
 class SaturnLayout extends Component {
@@ -23,6 +23,7 @@ class SaturnLayout extends Component {
       <Layout style={{ minHeight: '100vh' }}>
         <SideMenuDark collapsed={collapsed} onCollapse={this.onCollapse} />
         <Layout className="site-layout">
+          <Header className={"site-layout-background"}/>
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
