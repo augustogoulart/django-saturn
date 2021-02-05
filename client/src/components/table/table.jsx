@@ -65,6 +65,7 @@ class ModelTable extends Component {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
     }
+
     return (
       <>
         <Space style={{ marginBottom: 16 }}>
@@ -75,6 +76,7 @@ class ModelTable extends Component {
           <Button type={"link"} onClick={this.clearFiltersAndSorters}>Clear</Button>
         </Space>
         <Table
+          rowKey={data => data.key}
           rowSelection={rowSelection}
           columns={this.columns()}
           dataSource={data}

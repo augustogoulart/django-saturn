@@ -3,7 +3,6 @@ import {User} from "./pages/user/user";
 import HomePage from "./pages/homepage/homepage";
 import SaturnLayout from "./layouts/layout";
 import {
-  BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
@@ -15,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Router>
           <SaturnLayout>
             <Switch>
               <Route exact path={"/"}>
@@ -26,7 +24,6 @@ class App extends Component {
               </Route>
             </Switch>
           </SaturnLayout>
-        </Router>
       </div>
     );
   }
