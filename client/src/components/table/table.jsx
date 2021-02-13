@@ -8,8 +8,6 @@ import {Overlay} from "../dropdown-overlay/Overlay";
 
 class ModelTable extends Component {
   state = {
-    filteredInfo: null,
-    sortedInfo: null,
     data: null,
     selectedRowKeys: []
   };
@@ -23,32 +21,9 @@ class ModelTable extends Component {
     this.setState({selectedRowKeys})
   }
 
-  handleChange = (pagination, filters, sorter) => {
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
-  };
-
-  clearFiltersAndSorters = () => {
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
-    });
-  };
-
-  setAgeSort = () => {
-    this.setState({
-      sortedInfo: {
-        order: 'descend',
-        columnKey: 'age',
-      },
-    });
-  };
-
-  onMenuItemClick= () => {
+  onDeleteAction = () => {
     const {selectedRowKeys, data} = this.state
-    const updatedDate = data.filter(item => !selectedRowKeys.includes(item.key))
+    const updatedDate = data.filter(item => !selectedRowKeys.includes(item.id))
     this.setState({data: updatedDate})
   }
 
@@ -68,18 +43,16 @@ class ModelTable extends Component {
     return (
       <>
         <Space style={{ marginBottom: 16 }}>
-          <Dropdown overlay={Overlay(this.onMenuItemClick)} trigger={["click"]}>
+          <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
-          <Button onClick={this.setAgeSort}>Sort age</Button>
-          <Button type={"link"} onClick={this.clearFiltersAndSorters}>Clear</Button>
         </Space>
         <Table
           rowKey={data => data.id}
           rowSelection={rowSelection}
           columns={this.columns()}
           dataSource={data}
-          onChange={this.handleChange} />
+        />
       </>
     );
   }
