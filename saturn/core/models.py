@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class DummyUserModel(models.Model):
+class DummyUser(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):

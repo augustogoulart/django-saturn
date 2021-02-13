@@ -48,7 +48,6 @@ class ModelTable extends Component {
 
   onMenuItemClick= () => {
     const {selectedRowKeys, data} = this.state
-
     const updatedDate = data.filter(item => !selectedRowKeys.includes(item.key))
     this.setState({data: updatedDate})
   }
@@ -56,7 +55,7 @@ class ModelTable extends Component {
   componentDidMount() {
     fetch('/api/users/')
       .then(response => response.json())
-      .then(response => this.setState({data: response.data}))
+      .then(response => this.setState({data: response}))
   }
 
   render() {
@@ -76,7 +75,7 @@ class ModelTable extends Component {
           <Button type={"link"} onClick={this.clearFiltersAndSorters}>Clear</Button>
         </Space>
         <Table
-          rowKey={data => data.key}
+          rowKey={data => data.id}
           rowSelection={rowSelection}
           columns={this.columns()}
           dataSource={data}

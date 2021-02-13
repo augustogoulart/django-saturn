@@ -1,5 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import DummyUser
+from .serializers import DummyUserSerializer
 
 
 @api_view(['GET'])
@@ -8,36 +10,7 @@ def dummy_endpoint(request):
 
 
 @api_view(['GET'])
-def dummy_users(request):
-    return Response({'data': [
-        {
-            'key': '1',
-            'name': 'John Brown',
-            'age': 11,
-            'address': 'New York No. 1 Lake Park',
-        },
-        {
-            'key': '2',
-            'name': 'Jim Green',
-            'age': 22,
-            'address': 'London No. 1 Lake Park',
-        },
-        {
-            'key': '3',
-            'name': 'Joe Black',
-            'age': 33,
-            'address': 'Sidney No. 1 Lake Park',
-        },
-        {
-            'key': '4',
-            'name': 'Jim Red',
-            'age': 44,
-            'address': 'London No. 2 Lake Park',
-        },
-        {
-            'key': '5',
-            'name': 'Augusto G',
-            'age': 30,
-            'address': 'London No. 2 Lake Park',
-        }
-    ]})
+def dummy_users_list(request):
+    dummy_users = DummyUser.objects.all()
+    serialized = DummyUserSerializer(dummy_users, many=True)
+    return Response(serialized.data)

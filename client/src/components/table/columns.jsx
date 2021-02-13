@@ -16,13 +16,13 @@ export const BuildColumns = (sortedInfo, filteredInfo) => {
       sorter: (a, b) => a.name.length - b.name.length,
       sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
       ellipsis: true,
-      render: (name, row) => <Link to={`/auth/user/${row.key}`}>{name}</Link>
+      render: (name, row) => <Link to={`/auth/user/${row.id}`}>{name}</Link>
     },
     {
-      title: 'Age',
-      dataIndex: 'key',
+      title: 'id',
+      dataIndex: 'id',
       sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
+      sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
       ellipsis: true,
     },
     {
