@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import './App.css';
-import {UserDetail} from "./components/user-detail/user-detail";
+import UserDetail from "./components/user-detail/user-detail";
 
 
 class App extends Component {
@@ -23,9 +23,7 @@ class App extends Component {
               <Route exact path={"/auth/user"}>
                 <User/>
               </Route>
-              <Route path={"/auth/user/:id"}>
-                <UserDetail/>
-              </Route>
+              <Route path={"/auth/user/:id"} component={UserDetail} />
             </Switch>
           </SaturnLayout>
       </div>

@@ -3,6 +3,11 @@ def test_dummy_api_get(client):
     assert resp.status_code == 200
 
 
-def test_dummy_user_api_get(client):
+def test_dummy_user_get(db, client):
     resp = client.get('/api/users/')
+    assert resp.status_code == 200
+
+
+def test_dummy_user_detail_get(db, client):
+    resp = client.get('/api/users/1/')
     assert resp.status_code == 200

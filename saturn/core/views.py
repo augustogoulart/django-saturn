@@ -14,3 +14,10 @@ def dummy_users_list(request):
     dummy_users = DummyUser.objects.all()
     serialized = DummyUserSerializer(dummy_users, many=True)
     return Response(serialized.data)
+
+
+@api_view(['GET'])
+def dummy_user_detail(request, pk):
+    dummy_user = DummyUser.objects.get(pk=pk)
+    serialized = DummyUserSerializer(dummy_user)
+    return Response(serialized.data)
