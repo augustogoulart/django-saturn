@@ -27,14 +27,16 @@ class HomePage extends Component {
         {
           app_list.map(
             app =>
-              <Table key={app.app_label}
-                     columns={[{
-                           title:app.name,
-                           key:app.app_label,
-                           dataIndex: "name"
-                         }]}
-                     dataSource={app.models}
-                     pagination={false}/>)
+              <Table
+                style={{"padding":"3vh"}}
+                key={app.app_label}
+                columns={[{
+                       title:app.name,
+                       key:app.app_label,
+                       dataIndex: "name"
+                     }]}
+                dataSource={app.models}
+                pagination={false}/>)
         }
       </>
 
