@@ -1,6 +1,7 @@
 from django.contrib.admin import AdminSite
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.models import User, Group
 
 from saturn.core.models import DummyUser
 
@@ -24,3 +25,5 @@ class SaturnAdmin(AdminSite):
 
 saturn_admin_site = SaturnAdmin(name="saturn")
 saturn_admin_site.register(DummyUser)
+saturn_admin_site.register(User)
+saturn_admin_site.register(Group)
