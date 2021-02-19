@@ -3,3 +3,4 @@ from .models import DummyUser
 
 
 admin.site.register(DummyUser)
+
