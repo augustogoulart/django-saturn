@@ -13,8 +13,7 @@ class ModelTable extends Component {
   };
 
   columns() {
-    const { sortedInfo, filteredInfo } = this.state;
-    return BuildColumns(sortedInfo, filteredInfo)
+    return BuildColumns()
   }
 
   onRowSelectionChange = (selectedRowKeys) => {

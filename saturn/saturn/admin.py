@@ -1,7 +1,8 @@
-from django.contrib.admin import AdminSite
+from django.contrib import admin
+from django.contrib.admin import AdminSite, ModelAdmin
+from django.contrib.auth.models import User, Group
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
-from django.contrib.auth.models import User, Group
 
 from saturn.core.models import DummyUser
 
@@ -24,6 +25,11 @@ class SaturnAdmin(AdminSite):
 
 
 saturn_admin_site = SaturnAdmin(name="saturn")
-saturn_admin_site.register(DummyUser)
-saturn_admin_site.register(User)
-saturn_admin_site.register(Group)
+
+
+@admin.register(DummyUser, User, Group, site=saturn_admin_site)
+class UserAdmin(ModelAdmin):
+
+    def changelist_view(self, request, extra_context=None):
+        queryset = self.get_queryset(request)
+        return JsonResponse({"list": list(queryset.values())})

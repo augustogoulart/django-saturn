@@ -20,10 +20,10 @@ class App extends Component {
               <Route exact path={"/"}>
                 <HomePage/>
               </Route>
-              <Route exact path={"/auth/user"}>
+              <Route exact path={"/saturn/core/dummyuser/"}>
                 <User/>
               </Route>
-              <Route path={"/auth/user/:id"} component={UserDetail} />
+              <Route path={"/saturn/core/dummyuser/:id"} component={UserDetail} />
             </Switch>
           </SaturnLayout>
       </div>

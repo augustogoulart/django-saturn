@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+import debug_toolbar
+from django.urls import path, include
 from saturn.saturn.admin import saturn_admin_site
 from saturn.core.views import dummy_endpoint, dummy_users_list, dummy_user_detail
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('api/users/', dummy_users_list),
     path('api/users/<int:pk>/', dummy_user_detail),
     path('admin/', admin.site.urls),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
