@@ -1,5 +1,6 @@
 import {Component} from "react";
 import {Table} from 'antd';
+import {Link} from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 import './homepage.scss';
@@ -33,7 +34,8 @@ class HomePage extends Component {
                 columns={[{
                        title:app.name,
                        key:app.app_label,
-                       dataIndex: "name"
+                       dataIndex: "name",
+                       render: (name, row) =>  <Link to={row.admin_url}>{name}</Link>
                      }]}
                 dataSource={app.models}
                 pagination={false}/>)
