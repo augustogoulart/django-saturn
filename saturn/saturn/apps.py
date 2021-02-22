@@ -1,4 +1,4 @@
-from django.apps import AppConfig
+cfrom django.apps import AppConfig
 
 
 class SaturnConfig(AppConfig):
