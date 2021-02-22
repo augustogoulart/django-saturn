@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'saturn.core',
-    'rest_framework',
     'debug_toolbar',
 ]
 
