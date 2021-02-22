@@ -24,8 +24,21 @@
   },
   "dependencies": {
     "antd": "^4.12.3",
+    "css-loader": "^5.0.2",
     "node-sass": "^5.0.0",
     "react-highlight-words": "^0.17.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "style-loader": "^2.0.0",
+    "@babel/core": "^7.12.17",
+    "@babel/plugin-transform-runtime": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/runtime": "^7.12.18",
+    "babel-loader": "^8.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sass-loader": "^11.0.1",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0"
   }
 }
