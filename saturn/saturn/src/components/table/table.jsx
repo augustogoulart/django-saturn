@@ -26,13 +26,13 @@ class ModelTable extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/users/')
+    fetch('/saturn/saturn/dummyuser/')
       .then(response => response.json())
       .then(response => this.setState({data: response}))
   }
 
   render() {
-    const { data, selectedRowKeys } = this.state;
+    const { usedata, selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
@@ -46,10 +46,10 @@ class ModelTable extends Component {
           </Dropdown>
         </Space>
         <Table
-          rowKey={data => data.id}
+          rowKey={user => user.id}
           rowSelection={rowSelection}
           columns={this.columns()}
-          dataSource={data}
+          dataSource={data.users}
         />
       </>
     );

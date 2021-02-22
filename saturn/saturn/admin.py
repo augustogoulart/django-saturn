@@ -6,6 +6,8 @@ from django.views.decorators.cache import never_cache
 
 from .models import DummyUser
 
+admin.site.register(DummyUser)
+
 
 class SaturnAdmin(AdminSite):
     site_header = "Site Administration"
@@ -32,4 +34,4 @@ class UserAdmin(ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         queryset = self.get_queryset(request)
-        return JsonResponse({"list": list(queryset.values())})
+        return JsonResponse({"users": list(queryset.values())})

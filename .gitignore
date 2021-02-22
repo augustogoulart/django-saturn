@@ -12,6 +12,7 @@ client/.eslintcache
 
 # production
 /build
+main.js
 
 # misc
 .DS_Store
