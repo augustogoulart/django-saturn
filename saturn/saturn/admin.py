@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 
-from saturn.core.models import DummyUser
+from .models import DummyUser
 
 
 class SaturnAdmin(AdminSite):
