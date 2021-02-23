@@ -7,7 +7,7 @@ import {Overlay} from "../dropdown-overlay/Overlay.jsx";
 
 class ModelTable extends Component {
   state = {
-    data: null,
+    data: [],
     selectedRowKeys: []
   };
 
@@ -28,16 +28,15 @@ class ModelTable extends Component {
   componentDidMount() {
     fetch('/saturn/saturn/dummyuser/')
       .then(response => response.json())
-      .then(response => this.setState({data: response}))
+      .then(data => this.setState({data: data.users}))
   }
 
   render() {
-    const { usedata, selectedRowKeys } = this.state;
+    const { data, selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
     }
-
     return (
       <>
         <Space style={{ marginBottom: 16 }}>
@@ -49,7 +48,7 @@ class ModelTable extends Component {
           rowKey={user => user.id}
           rowSelection={rowSelection}
           columns={this.columns()}
-          dataSource={data.users}
+          dataSource={data}
         />
       </>
     );
