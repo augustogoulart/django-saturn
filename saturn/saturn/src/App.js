@@ -24,7 +24,7 @@ class App extends Component {
               <Route exact path={"/saturn/saturn/dummyuser/"}>
                 <User/>
               </Route>
-              <Route exact path={"/saturn/saturn/dummyuser/:id"} component={UserDetail} />
+              <Route exact path={"/saturn/saturn/dummyuser/:id/change"} component={UserDetail} />
             </Switch>
           </SaturnLayout>
       </div>
