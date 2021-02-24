@@ -6,6 +6,7 @@ export const BuildColumns = () => {
     {
       title: 'Name',
       dataIndex: 'name',
+      key: 'name',
       render: (name, row) => <Link to={`/saturn/saturn/dummyuser/${row.id}/change/`}>{name}</Link>
     },
     {

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 import {User} from "./pages/user/user.jsx";
 import HomePage from "./pages/homepage/homepage.jsx";
 import SaturnLayout from "./layouts/layout.jsx";

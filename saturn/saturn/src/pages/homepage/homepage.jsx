@@ -14,11 +14,6 @@ class HomePage extends Component {
     }
   };
 
-  constructor() {
-    super();
-
-  }
-
   componentDidMount() {
     fetch("/saturn/")
       .then(response => response.json())
@@ -27,7 +22,6 @@ class HomePage extends Component {
 
   render() {
     const {context: {app_list}} = this.state
-
     return (
       <>
         {
@@ -36,9 +30,10 @@ class HomePage extends Component {
               <Table
                 style={{"padding":"3vh"}}
                 key={app.app_label}
+                rowKey={'name'}
                 columns={[{
                        title:app.name,
-                       key:app.app_label,
+                       key:app.app_url,
                        dataIndex: "name",
                        render: (name, row) =>  <Link to={row.admin_url}>{name}</Link>
                      }]}
