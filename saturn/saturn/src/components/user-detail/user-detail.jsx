@@ -9,7 +9,7 @@ class UserDetail extends Component {
 
   componentDidMount() {
     const { userId } = this.state
-    fetch(`/api/users/${userId}/`)
+    fetch(`/saturn/saturn/dummyuser/${userId}/change/`)
       .then(response => response.json())
       .then(response => this.setState({user: response}))
   }
