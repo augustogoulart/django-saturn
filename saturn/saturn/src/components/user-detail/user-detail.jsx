@@ -1,5 +1,5 @@
-import React,{ Component } from "react";
-import { Button } from "antd";
+import React, {Component} from "react";
+import ChangeForm from "../change-form/change-form.jsx";
 
 class UserDetail extends Component {
   state = {
@@ -8,24 +8,20 @@ class UserDetail extends Component {
   }
 
   componentDidMount() {
-    const { userId } = this.state
+    const {userId} = this.state
     fetch(`/saturn/saturn/dummyuser/${userId}/change/`)
       .then(response => response.json())
       .then(response => this.setState({user: response}))
   }
 
-  deleteUser= () => {
+  deleteUser = () => {
     console.log("User deleted")
   }
 
   render() {
     const {user} = this.state
-    return(
-      <>
-        <div>Name: {user ? user.name : null}</div>
-        <hr/>
-        <Button type={"primary"} onClick={this.deleteUser}>Delete</Button>
-      </>
+    return (
+      <ChangeForm modelObj={user}/>
     )
   }
 }
