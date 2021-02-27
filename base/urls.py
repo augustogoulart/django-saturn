@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 import debug_toolbar
 from django.urls import path, include
-from .saturn.admin import saturn_admin_site
-from .saturn.views import home
+from saturn.admin import saturn_admin_site
+from saturn.views import home
 
 
 urlpatterns = [
