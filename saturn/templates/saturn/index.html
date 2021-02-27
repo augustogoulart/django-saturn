@@ -1,3 +1,4 @@
+{% load json_bleach %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,5 +12,9 @@
 </div>
 </body>
 {% load static %}
-<script src="{% static "saturn/main.js" %}"></script>
+<script>
+  window.context = {{ context|json_bleach}};
+</script>
+<script src="{% static "saturn/main.js" %}">
+</script>
 </html>

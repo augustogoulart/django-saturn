@@ -11,14 +11,13 @@ import './App.scss';
 import UserDetail from "./components/user-detail/user-detail.jsx";
 
 
-class App extends Component {
-  render() {
-    return (
+function App({context}){
+  const json_context = JSON.parse(context)
+  return(
       <div className="App">
           <SaturnLayout>
             <Switch>
-              <Route exact path={"/"}>
-                <HomePage/>
+              <Route exact path={"/saturn/"} render={() => <HomePage context={json_context}/>}>
               </Route>
               <Route exact path={"/saturn/saturn/dummyuser/"}>
                 <User/>
@@ -28,7 +27,6 @@ class App extends Component {
           </SaturnLayout>
       </div>
     );
-  }
 }
 
 export default App;

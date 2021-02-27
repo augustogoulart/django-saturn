@@ -1,7 +1,11 @@
+import json
+
 from django.contrib import admin
 from django.contrib.admin import AdminSite, ModelAdmin
 from django.contrib.auth.models import User, Group
+from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
 from .models import DummyUser
@@ -23,7 +27,9 @@ class SaturnAdmin(AdminSite):
             **(extra_context or {}),
         }
 
-        return JsonResponse(context)
+        react_context = json.dumps(context, cls=DjangoJSONEncoder)
+
+        return render(request, 'saturn/index.html', {'context': react_context})
 
 
 saturn_admin_site = SaturnAdmin(name="saturn")
