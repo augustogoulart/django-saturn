@@ -4,8 +4,8 @@
   "description": "Cosmic django-admin",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --entry ./src/index.js --output-path static/saturn --watch",
-    "build": "webpack --mode production --entry ./src/index.js --output-path static/saturn"
+    "dev": "webpack --mode development --entry ./frontend/index.js --output-path static/saturn --watch",
+    "build": "webpack --mode production --entry ./frontend/index.js --output-path static/saturn"
   },
   "author": "",
   "license": "ISC",
