@@ -10,7 +10,7 @@ export const SideMenuDark = ({collapsed, onCollapse}) => (
     <div className="logo"/>
     <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
       <Menu.Item key="4" icon={<HomeOutlined />}>
-        <Link to={"/"}>Home</Link>
+        <Link to={"/saturn/"}>Home</Link>
       </Menu.Item>
     </Menu>
   </Sider>

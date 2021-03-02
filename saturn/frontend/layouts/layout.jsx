@@ -1,8 +1,7 @@
-import 'antd/dist/antd.css';
 import './layout.scss'
 import {SideMenuDark} from "../components/sidemenu/SideMenu.jsx";
 import {Breadcrumb, Layout} from 'antd';
-import React, {Component} from "react/cjs/react.production.min";
+import React, {Component} from "react";
 
 const { Header, Content, Footer } = Layout;
 

@@ -2,7 +2,6 @@ import React from "react";
 import {Table} from 'antd';
 import {Link} from 'react-router-dom';
 
-import 'antd/dist/antd.css';
 import './homepage.scss';
 
 function HomePage({context}) {

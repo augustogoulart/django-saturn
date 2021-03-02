@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css';
 import {BuildColumns} from "./columns.jsx";
 import React,{Component} from 'react';
 import {Button, Dropdown, Space, Table} from 'antd';
