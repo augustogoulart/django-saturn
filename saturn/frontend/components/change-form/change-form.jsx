@@ -6,7 +6,7 @@ const ChangeForm = ({modelObj}) => {
   const csrftoken = Cookies.get('csrftoken');
 
   return (
-    <form action={'/saturn/saturn/dummyuser/2/change/'} method={'post'}>
+    <form action={'/saturn/sandbox/dummyuser/2/change/'} method={'post'}>
     <div>
       <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken}/>
       <label htmlFor="username">Username</label>

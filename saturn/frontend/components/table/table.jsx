@@ -26,7 +26,7 @@ class ModelTable extends Component {
   }
 
   componentDidMount() {
-    fetch('/saturn/saturn/dummyuser/')
+    fetch('/saturn/sandbox/dummyuser/')
       .then(response => response.json())
       .then(data => this.setState({data: data.users}))
   }
@@ -43,7 +43,7 @@ class ModelTable extends Component {
           <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
-          <Link to={'/saturn/saturn/dummyuser/add/'}><Button>Add</Button></Link>
+          <Link to={'/saturn/sandbox/dummyuser/add/'}><Button>Add</Button></Link>
         </Space>
         <Table
           rowKey={user => user.id}
