@@ -1,8 +1,9 @@
 import {BuildColumns} from "./columns.jsx";
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {Button, Dropdown, Space, Table} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
 import {Overlay} from "../dropdown-overlay/Overlay.jsx";
+import {Link} from "react-router-dom";
 
 class ModelTable extends Component {
   state = {
@@ -42,6 +43,7 @@ class ModelTable extends Component {
           <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
+          <Link to={'/saturn/saturn/dummyuser/add/'}><Button>Add</Button></Link>
         </Space>
         <Table
           rowKey={user => user.id}
