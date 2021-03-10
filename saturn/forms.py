@@ -1,5 +1,5 @@
 from django import forms
-from .models import DummyUser
+from sandbox.models import DummyUser
 
 
 class UsernameForm(forms.ModelForm):
