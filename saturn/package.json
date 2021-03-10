@@ -23,21 +23,22 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
-    "antd": "^4.12.3",
-    "css-loader": "^5.0.2",
-    "node-sass": "^5.0.0",
-    "react-highlight-words": "^0.17.0",
-    "react-router-dom": "^5.2.0",
-    "style-loader": "^2.0.0",
     "@babel/core": "^7.12.17",
     "@babel/plugin-transform-runtime": "^7.12.17",
     "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "@babel/runtime": "^7.12.18",
+    "antd": "^4.13.0",
     "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.2",
+    "js-cookie": "^2.2.1",
+    "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-highlight-words": "^0.17.0",
+    "react-router-dom": "^5.2.0",
     "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
     "webpack": "^5.23.0",
     "webpack-cli": "^4.5.0"
   }
