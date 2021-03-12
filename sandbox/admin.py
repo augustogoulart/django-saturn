@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 
-from saturn.admin import saturn_admin_site
+from saturn.admin import site as saturn_admin
 from saturn.options import SaturnAdminModel
 from .models import DummyUser
 
@@ -10,6 +10,7 @@ admin.site.register(DummyUser)
 
 
 # Register to Saturn Admin
-@admin.register(DummyUser, User, Group, site=saturn_admin_site)
-class UserAdmin(SaturnAdminModel):
-    pass
+saturn_admin.register(DummyUser)
+saturn_admin.register(User)
+saturn_admin.register(Group)
+
