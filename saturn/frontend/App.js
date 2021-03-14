@@ -15,11 +15,11 @@ function App({context}) {
         <Switch>
           <Route exact path={"/saturn/"} render={() => <HomePage context={context}/>}>
           </Route>
-          <Route exact path={"/saturn/sandbox/dummyuser/"}>
+          <Route path={"/saturn/sandbox/dummyuser/"}>
             <User/>
           </Route>
-          <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Add}/>
-          <Route exact path={"/saturn/sandbox/dummyuser/:id/change"} component={UserDetail}/>
+          <Route path={"/saturn/sandbox/dummyuser/add"} component={Add}/>
+          <Route path={"/saturn/sandbox/dummyuser/:id/change"} component={UserDetail}/>
         </Switch>
       </SaturnLayout>
     </div>

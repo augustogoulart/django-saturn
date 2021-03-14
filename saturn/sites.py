@@ -1,8 +1,11 @@
 import json
+from functools import update_wrapper
+
 from django.contrib.admin import AdminSite
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.base import ModelBase
 from django.shortcuts import render
+from django.urls import re_path, path, include
 from django.views.decorators.cache import never_cache
 
 from saturn.options import SaturnAdminModel
@@ -48,3 +51,36 @@ class SaturnAdminSite(AdminSite):
         react_context = json.dumps(context, cls=DjangoJSONEncoder)
 
         return render(request, 'saturn/index.html', {'context': react_context})
+
+    """
+    WIP: Django/React URL handlers
+    """
+    def get_urls(self):
+        def wrap(view, cacheable=False):
+            def wrapper(*args, **kwargs):
+                return self.admin_view(view, cacheable)(*args, **kwargs)
+            wrapper.admin_site = self
+            return update_wrapper(wrapper, view)
+
+        urlpatterns = [
+            re_path(r'^(?:.*)/?$', wrap(self.index), name='index')
+        ]
+
+        # Add in each model's views, and create a list of valid URLS for the
+        # app_index
+        valid_app_labels = []
+        for model, model_admin in self._registry.items():
+            urlpatterns += [
+                path('%s/%s/' % (model._meta.app_label, model._meta.model_name), include(model_admin.urls)),
+            ]
+            if model._meta.app_label not in valid_app_labels:
+                valid_app_labels.append(model._meta.app_label)
+
+        # If there were ModelAdmins registered, we should have a list of app
+        # labels for which we need to allow access to the app_index view,
+        if valid_app_labels:
+            regex = r'^(?P<app_label>' + '|'.join(valid_app_labels) + ')/$'
+            urlpatterns += [
+                re_path(regex, wrap(self.app_index), name='app_list'),
+            ]
+        return urlpatterns
