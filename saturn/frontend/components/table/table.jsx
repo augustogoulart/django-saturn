@@ -26,7 +26,7 @@ class ModelTable extends Component {
   }
 
   componentDidMount() {
-    fetch('/saturn/sandbox/dummyuser/')
+    fetch('/saturn/__sandbox__/dummyuser/')
       .then(response => response.json())
       .then(data => this.setState({data: data.users}))
   }

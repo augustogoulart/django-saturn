@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 import './homepage.scss';
 
 function HomePage({context}) {
-  const {app_list} = context
+  const {frontend_url, app_list} = context
+  console.log(context)
   return (
     <>
       {
@@ -19,7 +20,7 @@ function HomePage({context}) {
                 title: app.name,
                 key: app.app_url,
                 dataIndex: "name",
-                render: (name, row) => <Link to={row.admin_url}>{name}</Link>
+                render: (name, row) => <Link to={frontend_url}>{name}</Link>
               }]}
               dataSource={app.models}
               pagination={false}/>)
