@@ -84,6 +84,6 @@ class SaturnAdminSite(AdminSite):
             urlpatterns += [
                 re_path(regex, wrap(self.app_index), name='app_list'),
             ]
-            
+
         urlpatterns += [re_path(r'^(?:.*)/?$', wrap(self.index), name='index')]
         return urlpatterns

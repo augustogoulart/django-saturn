@@ -6,7 +6,6 @@ import './homepage.scss';
 
 function HomePage({context}) {
   const {frontend_url, app_list} = context
-  console.log(context)
   return (
     <>
       {

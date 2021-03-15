@@ -4,9 +4,9 @@ import {Link} from "react-router-dom"
 export const BuildColumns = () => {
   return [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
       render: (name, row) => <Link to={`/saturn/sandbox/dummyuser/${row.id}/change/`}>{name}</Link>
     },
     {

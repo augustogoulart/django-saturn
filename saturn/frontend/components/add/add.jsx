@@ -1,18 +1,69 @@
 import React from 'react';
 import Cookies from 'js-cookie'
 
+import {Form, Input, Button, Checkbox} from "antd";
+
+const layout = {
+  labelCol: {
+    span: 2,
+  },
+  wrapperCol: {
+    span: 4,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 2,
+    span: 8,
+  },
+};
+
 const Add = ({modelObj}) => {
-  const csrftoken = Cookies.get('csrftoken');
+  const onFinish = (values) => {
+    const csrftoken = Cookies.get('csrftoken');
+    const headers = new Headers();
+    headers.append('X-CSRFToken', csrftoken);
+    fetch('/saturn/__sandbox__/dummyuser/add/', {
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: headers,
+      credentials: 'include'
+    })
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
   return (
-    <form action={'/saturn/sandbox/dummyuser/add/'} method={'post'}>
-      <div>
-        <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken}/>
-        <label htmlFor="username">Username</label>
-        <input type="text" id={'username'} name={'name'}/>
-      </div>
-      <button type={'submit'}>Submit</button>
-    </form>
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your username!',
+          },
+        ]}
+      >
+        <Input/>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
