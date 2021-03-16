@@ -1,7 +1,7 @@
 import React from 'react';
 import Cookies from 'js-cookie'
 
-import {Form, Input, Button, Checkbox} from "antd";
+import {message, Form, Input, Button} from "antd";
 
 const layout = {
   labelCol: {
@@ -19,16 +19,23 @@ const tailLayout = {
 };
 
 const Add = ({modelObj}) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
     const csrftoken = Cookies.get('csrftoken');
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
+
     fetch('/saturn/__sandbox__/dummyuser/add/', {
       method: 'POST',
       body: JSON.stringify(values),
       headers: headers,
       credentials: 'include'
     })
+      .then(()=> {message.success("New entry added");form.resetFields()})
+      .catch(() => message.error("Failed to create"))
+
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -39,9 +46,7 @@ const Add = ({modelObj}) => {
     <Form
       {...layout}
       name="basic"
-      initialValues={{
-        remember: true,
-      }}
+      form={form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
