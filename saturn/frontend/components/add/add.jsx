@@ -34,8 +34,6 @@ const Add = ({modelObj}) => {
     })
       .then(()=> {message.success("New entry added");form.resetFields()})
       .catch(() => message.error("Failed to create"))
-
-
   };
 
   const onFinishFailed = (errorInfo) => {
