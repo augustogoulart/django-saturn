@@ -27,7 +27,7 @@ class ModelTable extends Component {
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
 
-    fetch('/saturn/__sandbox__/dummyuser/delete/', {
+    fetch('/saturn/__sandbox__/dummyuser/', {
       method: 'POST',
       body: selectedRowKeys,
       headers: headers,

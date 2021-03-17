@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom"
 
 export const BuildColumns = () => {
+  // TODO - Table list should map to the model's __str__
   return [
     {
       title: 'Username',

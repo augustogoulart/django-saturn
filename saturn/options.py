@@ -1,6 +1,6 @@
 import json
 from django.contrib.admin import ModelAdmin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .forms import UsernameForm
 
@@ -8,6 +8,9 @@ from .forms import UsernameForm
 class SaturnAdminModel(ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         queryset = self.get_queryset(request)
+        actions = self.get_actions(request)
+        if actions and request.method == 'POST':
+            self.response_delete(request)
         return JsonResponse({"users": list(queryset.values())})
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
@@ -30,3 +33,8 @@ class SaturnAdminModel(ModelAdmin):
             context = {'error': f'{request.method} Method not allowed'}
 
         return JsonResponse(context)
+
+    def response_delete(self, request):
+        obj = self.get_object(request, request.body)
+        self.delete_model(request, obj)
+        return HttpResponse()
