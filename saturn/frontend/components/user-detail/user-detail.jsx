@@ -27,3 +27,4 @@ class UserDetail extends Component {
 }
 
 export default UserDetail;
+

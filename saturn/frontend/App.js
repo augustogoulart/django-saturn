@@ -6,9 +6,10 @@ import {Route, Switch} from "react-router-dom";
 
 import './App.scss';
 import UserDetail from "./components/user-detail/user-detail.jsx";
-import Add from "./components/add/add.jsx";
+import Change from "./components/change-form/change-form.jsx"
 
 function App({context}) {
+  console.log(context)
   return (
     <div className="App">
       <SaturnLayout>
@@ -18,7 +19,7 @@ function App({context}) {
           <Route exact path={"/saturn/sandbox/dummyuser/"}>
             <User/>
           </Route>
-          <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Add}/>
+          <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Change}/>
           <Route exact path={"/saturn/sandbox/dummyuser/:id/change"} component={UserDetail}/>
         </Switch>
       </SaturnLayout>
