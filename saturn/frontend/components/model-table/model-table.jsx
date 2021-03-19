@@ -9,13 +9,15 @@ import Cookies from "js-cookie";
 class ModelTable extends Component {
   state = {
     data: [],
+    listDisplay: [],
     selectedRowKeys: [],
     modelName: this.props.match.params.modelName,
     appName: this.props.match.params.appName
   };
 
   columns() {
-    return BuildColumns()
+    const {listDisplay, modelName} = this.state
+    return BuildColumns(listDisplay, modelName)
   }
 
   onRowSelectionChange = (selectedRowKeys) => {
@@ -52,7 +54,7 @@ class ModelTable extends Component {
 
     fetch(`/saturn/__${appName}__/${modelName}/`)
       .then(response => response.json())
-      .then(data => this.setState({data: data.users}))
+      .then(data => this.setState({data: data[modelName], listDisplay: data['listDisplay']}))
   }
 
   render() {
