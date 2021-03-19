@@ -9,7 +9,6 @@ import UserDetail from "./components/user-detail/user-detail.jsx";
 import Change from "./components/change-form/change-form.jsx"
 
 function App({context}) {
-  console.log(context)
   return (
     <div className="App">
       <SaturnLayout>
