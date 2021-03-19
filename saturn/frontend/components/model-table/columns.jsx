@@ -7,7 +7,6 @@ export const BuildColumns = () => {
     {
       title: 'Username',
       dataIndex: 'username',
-      key: 'username',
       render: (name, row) => <Link to={`/saturn/sandbox/dummyuser/${row.id}/change/`}>{name}</Link>
     },
     {

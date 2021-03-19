@@ -9,7 +9,9 @@ import Cookies from "js-cookie";
 class ModelTable extends Component {
   state = {
     data: [],
-    selectedRowKeys: []
+    selectedRowKeys: [],
+    modelName: this.props.match.params.modelName,
+    appName: this.props.match.params.appName
   };
 
   columns() {
@@ -21,19 +23,22 @@ class ModelTable extends Component {
   }
 
   onDeleteAction = () => {
-    const {selectedRowKeys, data} = this.state
+    const {selectedRowKeys, data, modelName, appName} = this.state
 
     const csrftoken = Cookies.get('csrftoken');
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
 
-    fetch('/saturn/__sandbox__/dummyuser/', {
+    fetch(`/saturn/__${appName}__/${modelName}/`, {
       method: 'POST',
       body: selectedRowKeys,
       headers: headers,
       credentials: 'include'
     })
-      .then(()=> {message.success("Deleted");this.handleDelete(data, selectedRowKeys)})
+      .then(() => {
+        message.success("Deleted");
+        this.handleDelete(data, selectedRowKeys)
+      })
       .catch(() => message.error("Failed to delete"))
   }
 
@@ -43,27 +48,29 @@ class ModelTable extends Component {
   }
 
   componentDidMount() {
-    fetch('/saturn/__sandbox__/dummyuser/')
+    const {modelName, appName} = this.state
+
+    fetch(`/saturn/__${appName}__/${modelName}/`)
       .then(response => response.json())
       .then(data => this.setState({data: data.users}))
   }
 
   render() {
-    const { data, selectedRowKeys } = this.state;
+    const {selectedRowKeys, data, modelName, appName} = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
     }
     return (
       <>
-        <Space style={{ marginBottom: 16 }}>
+        <Space style={{marginBottom: 16}}>
           <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
-          <Link to={'/saturn/sandbox/dummyuser/add/'}><Button>Add</Button></Link>
+          <Link to={`/saturn/${appName}/${modelName}/add/`}><Button>Add</Button></Link>
         </Space>
         <Table
-          rowKey={user => user.id}
+          rowKey={obj => obj.id}
           rowSelection={rowSelection}
           columns={this.columns()}
           dataSource={data}
@@ -72,4 +79,5 @@ class ModelTable extends Component {
     );
   }
 }
+
 export default ModelTable;
