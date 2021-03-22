@@ -10,14 +10,15 @@ class ModelTable extends Component {
   state = {
     data: [],
     listDisplay: [],
+    title: '',
     selectedRowKeys: [],
     modelName: this.props.match.params.modelName,
     appName: this.props.match.params.appName
   };
 
   columns() {
-    const {listDisplay, modelName} = this.state
-    return BuildColumns(listDisplay, modelName)
+    const {listDisplay, modelName, appName, title} = this.state
+    return BuildColumns(listDisplay, modelName, appName, title)
   }
 
   onRowSelectionChange = (selectedRowKeys) => {
@@ -54,15 +55,21 @@ class ModelTable extends Component {
 
     fetch(`/saturn/__${appName}__/${modelName}/`)
       .then(response => response.json())
-      .then(data => this.setState({data: data[modelName], listDisplay: data['listDisplay']}))
+      .then(response => this.setState({
+        data: response[modelName],
+        listDisplay: response['listDisplay'],
+        title: response['title']}))
   }
 
   render() {
-    const {selectedRowKeys, data, modelName, appName} = this.state
+    const {selectedRowKeys, listDisplay, modelName, appName} = this.state
+    const {context} = listDisplay;
+
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
     }
+
     return (
       <>
         <Space style={{marginBottom: 16}}>
@@ -75,7 +82,7 @@ class ModelTable extends Component {
           rowKey={obj => obj.id}
           rowSelection={rowSelection}
           columns={this.columns()}
-          dataSource={data}
+          dataSource={context}
         />
       </>
     );
