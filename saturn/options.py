@@ -5,7 +5,11 @@ from django.http import JsonResponse, HttpResponse
 from .forms import UsernameForm
 
 
-class SaturnAdminModel(ModelAdmin):
+class SaturnAdmin:
+    pass
+
+
+class SaturnAdminModelOld(ModelAdmin):
     def get_context_for_str(self, request):
         queryset = self.get_queryset(request)
         context = []

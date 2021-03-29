@@ -10,10 +10,22 @@ from django.urls import re_path, path, include, reverse, NoReverseMatch
 from django.utils.text import capfirst
 from django.views.decorators.cache import never_cache
 
-from saturn.options import SaturnAdminModel
+from saturn.options import SaturnAdminModelOld, SaturnAdmin
 
 
-class SaturnAdminSite(AdminSite):
+class SaturnSite:
+    def __init__(self):
+        self._registry = {}
+
+    def register(self, model_or_iterable):
+        if isinstance(model_or_iterable, ModelBase):
+            model_or_iterable = [model_or_iterable]
+
+        for model in model_or_iterable:
+            self._registry[model] = SaturnAdmin
+
+
+class SaturnAdminSiteOld(AdminSite):
     site_header = "Site Administration"
     site_title = "Saturn Admin"
 
@@ -34,7 +46,7 @@ class SaturnAdminSite(AdminSite):
 
         TODO - If a model is abstract, raise ImproperlyConfigured.
         """
-        admin_class = admin_class or SaturnAdminModel
+        admin_class = admin_class or SaturnAdminModelOld
         if isinstance(model_or_iterable, ModelBase):
             model_or_iterable = [model_or_iterable]
         for model in model_or_iterable:
