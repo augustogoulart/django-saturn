@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 import debug_toolbar
 from django.urls import path, include
-from saturn.admin import site as saturn_Admin
+from saturn.admin import site as saturn
 
 
 urlpatterns = [
-    path('saturn/', saturn_Admin.urls),
+    path('saturn/', saturn.urls),
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

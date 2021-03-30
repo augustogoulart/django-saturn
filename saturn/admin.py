@@ -1,4 +1,4 @@
-from .sites import SaturnAdminSiteOld
+from .sites import SaturnSite
 
 
-site = SaturnAdminSiteOld()
+site = SaturnSite()
