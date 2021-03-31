@@ -8,12 +8,12 @@ import UserDetail from "./components/user-detail/user-detail.jsx";
 import Change from "./components/change-form/change-form.jsx"
 import ModelTable from "./components/model-table/model-table.jsx";
 
-function App({context}) {
+function App() {
   return (
     <div className="App">
       <SaturnLayout>
         <Switch>
-          <Route exact path={"/saturn/"} render={() => <HomePage context={context}/>}>
+          <Route exact path={"/saturn/"} render={() => <HomePage />}>
           </Route>
           <Route exact path={"/saturn/:appName/:modelName"} component={ModelTable}/>
           <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Change}/>

@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 
 import './homepage.scss';
 
-function HomePage({context}) {
-  const {app_list} = context
+function HomePage() {
+  const app_list = []
   return (
     <>
       {
