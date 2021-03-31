@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import ChangeForm from "../change-form/change-form.jsx";
 
-class UserDetail extends Component {
+class Detail extends Component {
   state = {
     user: null,
     userId: this.props.match.params.id
@@ -26,5 +26,5 @@ class UserDetail extends Component {
   }
 }
 
-export default UserDetail;
+export default Detail;
 
