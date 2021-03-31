@@ -3,10 +3,10 @@ import {Empty, Table} from 'antd';
 
 import './homepage.scss';
 
-function HomePage() {
+function IndexPage() {
   return (
    <Empty description={"No Models Registered"} image={Empty.PRESENTED_IMAGE_SIMPLE}/>
   )
 }
 
-export default HomePage;
+export default IndexPage;

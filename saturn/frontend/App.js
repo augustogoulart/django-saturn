@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePage from "./pages/homepage/homepage.jsx";
+import IndexPage from "./pages/homepage/homepage.jsx";
 import SaturnLayout from "./layouts/layout.jsx";
 import {Route, Switch} from "react-router-dom";
 
@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <SaturnLayout>
         <Switch>
-          <Route exact path={"/saturn/"} render={() => <HomePage />}>
+          <Route exact path={"/saturn/"} render={() => <IndexPage />}>
           </Route>
           <Route exact path={"/saturn/:appName/:modelName"} component={ModelTable}/>
           <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Change}/>
