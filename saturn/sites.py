@@ -1,4 +1,5 @@
 from django.db.models.base import ModelBase
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import path
 
@@ -20,6 +21,9 @@ class SaturnSite:
     def index(self, request):
         return render(request, 'saturn/index.html')
 
+    def list_registered(self, request):
+        return HttpResponse('ok')
+
     @property
     def urls(self):
-        return [path('', self.index)], 'saturn', self.name
+        return [path('', self.index), path('api/site/registered/', self.list_registered)], 'saturn', self.name

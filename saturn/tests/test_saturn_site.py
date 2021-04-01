@@ -28,14 +28,3 @@ def test_urls_has_url_pattern():
 def test_urls_return_app_name():
     assert len(saturn_site.urls) == 3
     assert 'saturn' in saturn_site.urls
-
-
-def test_index_view(rf):
-    """
-    Site's index view must return 200
-    """
-
-    # TODO - This is not right since the app's base URL can change.
-    request = rf.get('/')
-    response = saturn_site.index(request)
-    assert response.status_code == 200
