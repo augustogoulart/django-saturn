@@ -1,7 +1,6 @@
 from django.db.models.base import ModelBase
-from django.http import HttpResponse
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, include
 
 from saturn.options import SaturnAdmin
 
@@ -21,9 +20,17 @@ class SaturnSite:
     def index(self, request):
         return render(request, 'saturn/index.html')
 
-    def list_registered(self, request):
-        return HttpResponse('ok')
+    def get_urls(self):
+        urlpatterns = [
+            path('', self.index)
+        ]
+
+        for model, model_admin in self._registry.items():
+            urlpatterns += [
+                path('api/', include(model_admin.urls))
+            ]
+        return urlpatterns
 
     @property
     def urls(self):
-        return [path('', self.index), path('api/site/registered/', self.list_registered)], 'saturn', self.name
+        return self.get_urls(), 'saturn', self.name

@@ -10,11 +10,3 @@ def test_index_view(rf):
     request = rf.get('/')
     response = saturn_site.index(request)
     assert response.status_code == 200
-
-
-def test_registered_models_api(client):
-    """
-    Lists all the models registered with SaturnSite.
-    """
-    response = client.get('/saturn/api/site/registered/')
-    assert response.status_code == 200

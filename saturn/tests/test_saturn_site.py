@@ -6,6 +6,7 @@ from saturn.tests.models import TheModel
 
 
 saturn_site = SaturnSite()
+saturn_site.register(TheModel)
 
 
 def test_saturn_site_can_register_model():
@@ -21,7 +22,7 @@ def test_urls_has_url_pattern():
     """
     An instance of SaturnSite must have a url property returning a list of url patterns.
     """
-    route = saturn_site.urls[0][0]
+    route = saturn_site.get_urls()[0]
     assert isinstance(route, URLPattern)
 
 
