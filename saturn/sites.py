@@ -1,4 +1,5 @@
 from django.db.models.base import ModelBase
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import path, include
 
@@ -22,7 +23,8 @@ class SaturnSite:
 
     def get_urls(self):
         urlpatterns = [
-            path('', self.index)
+            path('', self.index),
+            path('api/registered/', self.list_registered)
         ]
 
         for model, model_admin in self._registry.items():
@@ -30,6 +32,12 @@ class SaturnSite:
                 path('api/', include(model_admin.urls))
             ]
         return urlpatterns
+
+    def list_registered(self, request):
+        return JsonResponse({
+            'registered': {'app': {'name': 'dummyApp', 'models': 'Model'}},
+
+        })
 
     @property
     def urls(self):

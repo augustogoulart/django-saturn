@@ -16,11 +16,3 @@ def test_model_admin_urls():
     """
     route = saturn_admin.urls[0]
     assert isinstance(route, URLPattern)
-
-
-def test_registered_models_api(client):
-    """
-    Lists all the models registered with SaturnSite.
-    """
-    response = client.get('/saturn/api/site/registered/')
-    assert response.status_code == 200

@@ -1,4 +1,5 @@
 from django.urls import URLPattern
+from rest_framework.utils import json
 
 from saturn.options import SaturnAdmin
 from saturn.sites import SaturnSite
@@ -29,3 +30,16 @@ def test_urls_has_url_pattern():
 def test_urls_return_app_name():
     assert len(saturn_site.urls) == 3
     assert 'saturn' in saturn_site.urls
+
+
+def test_registered_models_api(client):
+    """
+    Lists all the models registered with SaturnSite.
+    """
+    response = client.get('/saturn/api/registered/')
+    assert response.status_code == 200
+
+    content = json.loads(response.content)
+    assert content['registered']['app']['name']
+    assert content['registered']['app']['models']
+
