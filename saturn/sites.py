@@ -1,9 +1,77 @@
 from django.db.models.base import ModelBase
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from saturn.options import SaturnAdmin
+
+mock_list_registered_response = [
+    {
+        'name': 'Authentication and Authorization',
+        'appLabel': 'auth',
+        'appUrl': '/saturn/auth/',
+        'hasModulePerms': True,
+        'models': [
+            {
+                'name': 'Groups',
+                'objectName': 'Group',
+                'perms': {
+                    'add': True,
+                    'change': True,
+                    'delete': True,
+                    'view': True
+                },
+                'adminUrl': '/saturn/auth/group/',
+                'addUrl': '/saturn/auth/group/add/',
+                'viewOnly': False
+            },
+            {
+                'name': 'Users',
+                'objectName': 'User',
+                'perms': {
+                    'add': True,
+                    'change': True,
+                    'delete': True,
+                    'view': True
+                },
+                'adminUrl': '/saturn/auth/user/',
+                'addUrl': '/saturn/auth/user/add/',
+                'viewOnly': False
+            }
+        ]
+    },
+    {
+        'name': 'Sandbox',
+        'appLabel': 'sandbox',
+        'appUrl': '/saturn/sandbox/',
+        'hasModulePerms': True,
+        'models': [
+            {
+                'name': 'Dummy products',
+                'objectName': 'DummyProduct',
+                'perms':
+                    {
+                        'add': True,
+                        'change': True,
+                        'delete': True,
+                        'view': True
+                    },
+                'adminUrl': '/saturn/sandbox/dummyproduct/',
+                'addUrl': '/saturn/sandbox/dummyproduct/add/',
+                'viewOnly': False
+            },
+            {
+                'name': 'Dummy users',
+                'objectName': 'DummyUser',
+                'perms': {
+                    'add': True,
+                    'change': True,
+                    'delete': True,
+                    'view': True},
+                'adminUrl': '/saturn/sandbox/dummyuser/',
+                'addUrl': '/saturn/sandbox/dummyuser/add/', 'view_only': False
+            }]
+    }]
 
 
 class SaturnSite:
@@ -31,13 +99,13 @@ class SaturnSite:
             urlpatterns += [
                 path('api/', include(model_admin.urls))
             ]
+
+        # Delegate non-mapped paths to react-router
+        urlpatterns += [re_path(r'^(?:.*)/?$', self.index, name='index')]
         return urlpatterns
 
     def list_registered(self, request):
-        return JsonResponse({
-            'registered': {'app': {'name': 'dummyApp', 'models': 'Model'}},
-
-        })
+        return JsonResponse({"appList": mock_list_registered_response})
 
     @property
     def urls(self):
