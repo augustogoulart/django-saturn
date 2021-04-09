@@ -1,5 +1,5 @@
 import pytest
-from django.urls import URLPattern
+from django.urls import URLPattern, URLResolver
 from rest_framework.utils import json
 
 from saturn.options import SaturnAdmin
@@ -20,17 +20,23 @@ def test_saturn_site_can_register_model():
     assert isinstance(registered, SaturnAdmin)
 
 
-def test_urls_has_url_pattern():
+def test_urls_map_app_registered_models(client):
     """
     An instance of SaturnSite must have a url property returning a list of url patterns.
     """
-    route = saturn_site.get_urls()[0]
-    assert isinstance(route, URLPattern)
+    # TODO - This test is too low level.
+    # The  first two objets in this list are URLPatterns. The remaining after URLResolvers
+    assert isinstance(saturn_site.get_urls()[0], URLPattern)
+    assert isinstance(saturn_site.get_urls()[1], URLPattern)
+    assert isinstance(saturn_site.get_urls()[2], URLResolver)
+    assert saturn_site.get_urls()[2].url_patterns[0].name == 'saturn_themodel_changelist'
 
+    response = client.get('/saturn/api/saturn/themodel/')
+    print(response.content)
+    assert response.status_code == 200
 
-def test_urls_return_app_name():
-    assert len(saturn_site.urls) == 3
-    assert 'saturn' in saturn_site.urls
+    content = json.loads(response.content)
+    assert content['model'] == 'saturn'
 
 
 def test_registered_models_api_has_app_list(client):

@@ -10,10 +10,10 @@ class ModelTable extends Component {
   state = {
     data: [],
     listDisplay: [],
-    title: '',
+    title: null,
     selectedRowKeys: [],
     modelName: this.props.match.params.modelName,
-    appName: this.props.match.params.appName
+    appName: this.props.match.params.appName,
   };
 
   columns() {
@@ -32,7 +32,7 @@ class ModelTable extends Component {
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
 
-    fetch(`/saturn/__${appName}__/${modelName}/`, {
+    fetch(`/saturn/api/${appName}/${modelName}/`, {
       method: 'POST',
       body: selectedRowKeys,
       headers: headers,
@@ -53,12 +53,12 @@ class ModelTable extends Component {
   componentDidMount() {
     const {modelName, appName} = this.state
 
-    fetch(`/saturn/__${appName}__/${modelName}/`)
+    fetch(`/saturn/api/${appName}/${modelName}/`)
       .then(response => response.json())
-      .then(response => this.setState({
-        data: response[modelName],
-        listDisplay: response['listDisplay'],
-        title: response['title']}))
+      .then(data => this.setState({
+        data: data['model'],
+        listDisplay: data['listDisplay'],
+        title: data['title']}))
   }
 
   render() {
@@ -76,7 +76,7 @@ class ModelTable extends Component {
           <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
-          <Link to={`/saturn/${appName}/${modelName}/add/`}><Button>Add</Button></Link>
+          <Link to={`/saturn/api/${appName}/${modelName}/add/`}><Button>Add</Button></Link>
         </Space>
         <Table
           rowKey={obj => obj.id}

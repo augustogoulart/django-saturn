@@ -13,8 +13,7 @@ function App() {
     <div className="App">
       <SaturnLayout>
         <Switch>
-          <Route exact path={"/saturn/"} render={() => <IndexPage />}>
-          </Route>
+          <Route exact path={"/saturn/"} render={() => <IndexPage/>}/>
           <Route exact path={"/saturn/:appName/:modelName"} component={ModelTable}/>
           <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Change}/>
           <Route exact path={"/saturn/sandbox/dummyuser/:id/change"} component={Detail}/>

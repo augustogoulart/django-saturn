@@ -91,7 +91,7 @@ class SaturnSite:
 
     def get_urls(self):
         urlpatterns = [
-            path('', self.index),
+            path('', self.index, name='index'),
             path('api/registered/', self.list_registered)
         ]
 
@@ -100,8 +100,9 @@ class SaturnSite:
                 path('api/', include(model_admin.urls))
             ]
 
-        # Delegate non-mapped paths to react-router
-        urlpatterns += [re_path(r'^(?:.*)/?$', self.index, name='index')]
+        # Delegate non-mapped paths to react-router.
+        # This covers 404s and other error codes.
+        urlpatterns += [re_path(r'^(?:.*)/?$', self.index)]
         return urlpatterns
 
     def list_registered(self, request):
