@@ -8,8 +8,7 @@ import Cookies from "js-cookie";
 
 class ModelTable extends Component {
   state = {
-    data: [],
-    listDisplay: [],
+    dataSource: [],
     title: null,
     selectedRowKeys: [],
     modelName: this.props.match.params.modelName,
@@ -17,8 +16,8 @@ class ModelTable extends Component {
   };
 
   columns() {
-    const {listDisplay, modelName, appName, title} = this.state
-    return BuildColumns(listDisplay, modelName, appName, title)
+    const {dataSource, modelName, appName, title} = this.state
+    return BuildColumns(dataSource, modelName, appName, title)
   }
 
   onRowSelectionChange = (selectedRowKeys) => {
@@ -55,16 +54,11 @@ class ModelTable extends Component {
 
     fetch(`/saturn/api/${appName}/${modelName}/`)
       .then(response => response.json())
-      .then(data => this.setState({
-        data: data['model'],
-        listDisplay: data['listDisplay'],
-        title: data['title']}))
+      .then(dataSource => this.setState({dataSource: dataSource}))
   }
 
   render() {
-    const {selectedRowKeys, listDisplay, modelName, appName} = this.state
-    const {context} = listDisplay;
-
+    const {selectedRowKeys, modelName, appName, dataSource} = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onRowSelectionChange
@@ -82,7 +76,7 @@ class ModelTable extends Component {
           rowKey={obj => obj.id}
           rowSelection={rowSelection}
           columns={this.columns()}
-          dataSource={context}
+          dataSource={dataSource}
         />
       </>
     );
