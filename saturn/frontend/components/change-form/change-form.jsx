@@ -18,19 +18,23 @@ const tailLayout = {
   },
 };
 
-const ChangeForm = ({modelObj}) => {
+const ChangeForm = (props) => {
+  const modelName = props.match.params.modelName
+  const appName = props.match.params.appName
+
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
+  const postFormData = (values) => {
     const csrftoken = Cookies.get('csrftoken');
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
+    headers.append('Content-Type', 'application/json')
 
-    fetch('/saturn/__sandbox__/dummyuser/add/', {
+    fetch(`/saturn/api/${appName}/${modelName}/add/`, {
       method: 'POST',
       body: JSON.stringify(values),
       headers: headers,
-      credentials: 'include'
+      credentials: 'include',
     })
       .then(()=> {message.success("New entry added");form.resetFields()})
       .catch(() => message.error("Failed to create"))
@@ -45,7 +49,7 @@ const ChangeForm = ({modelObj}) => {
       {...layout}
       name="basic"
       form={form}
-      onFinish={onFinish}
+      onFinish={postFormData}
       onFinishFailed={onFinishFailed}
     >
       <Form.Item

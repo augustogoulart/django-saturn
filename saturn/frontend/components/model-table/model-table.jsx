@@ -70,7 +70,7 @@ class ModelTable extends Component {
           <Dropdown overlay={Overlay(this.onDeleteAction)} trigger={["click"]}>
             <Button>Actions<DownOutlined/></Button>
           </Dropdown>
-          <Link to={`/saturn/api/${appName}/${modelName}/add/`}><Button>Add</Button></Link>
+          <Link to={`/saturn/${appName}/${modelName}/add/`}><Button>Add</Button></Link>
         </Space>
         <Table
           rowKey={obj => obj.id}

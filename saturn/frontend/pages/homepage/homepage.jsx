@@ -14,7 +14,6 @@ function IndexPage() {
     .then(response => setState(response))
   }, [])
 
-
   return (
     <>
       {

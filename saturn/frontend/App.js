@@ -4,8 +4,7 @@ import SaturnLayout from "./layouts/layout.jsx";
 import {Route, Switch} from "react-router-dom";
 
 import './App.scss';
-import Detail from "./components/detail/detail.jsx";
-import Change from "./components/change-form/change-form.jsx"
+import ChangeForm from "./components/change-form/change-form.jsx"
 import ModelTable from "./components/model-table/model-table.jsx";
 
 function App() {
@@ -15,8 +14,8 @@ function App() {
         <Switch>
           <Route exact path={"/saturn/"} render={() => <IndexPage/>}/>
           <Route exact path={"/saturn/:appName/:modelName"} component={ModelTable}/>
-          <Route exact path={"/saturn/sandbox/dummyuser/add"} component={Change}/>
-          <Route exact path={"/saturn/sandbox/dummyuser/:id/change"} component={Detail}/>
+          <Route exact path={"/saturn/:appName/:modelName/add"} render={(props) => <ChangeForm {...props}/>}/>
+          <Route exact path={"/saturn/:appName/:modelName/:id/change"} render={(props) => <ChangeForm {...props}/>}/>
         </Switch>
       </SaturnLayout>
     </div>
