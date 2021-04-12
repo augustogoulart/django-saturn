@@ -13,7 +13,7 @@ function App() {
       <SaturnLayout>
         <Switch>
           <Route exact path={"/saturn/"} render={() => <IndexPage/>}/>
-          <Route exact path={"/saturn/:appName/:modelName"} component={ModelTable}/>
+          <Route exact path={"/saturn/:appName/:modelName"} render={(props) => <ModelTable {...props} />}/>
           <Route exact path={"/saturn/:appName/:modelName/add"} render={(props) => <ChangeForm {...props}/>}/>
           <Route exact path={"/saturn/:appName/:modelName/:id/change"} render={(props) => <ChangeForm {...props}/>}/>
         </Switch>

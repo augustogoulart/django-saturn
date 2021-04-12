@@ -18,13 +18,13 @@ const tailLayout = {
   },
 };
 
-const ChangeForm = (props) => {
+function ChangeForm(props){
   const modelName = props.match.params.modelName
   const appName = props.match.params.appName
 
   const [form] = Form.useForm();
 
-  const postFormData = (values) => {
+  function postFormData(values){
     const csrftoken = Cookies.get('csrftoken');
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
@@ -38,11 +38,11 @@ const ChangeForm = (props) => {
     })
       .then(()=> {message.success("New entry added");form.resetFields()})
       .catch(() => message.error("Failed to create"))
-  };
+  }
 
-  const onFinishFailed = (errorInfo) => {
+  function onFinishFailed(errorInfo){
     console.log('Failed:', errorInfo);
-  };
+  }
 
   return (
     <Form
@@ -72,6 +72,6 @@ const ChangeForm = (props) => {
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default ChangeForm;
