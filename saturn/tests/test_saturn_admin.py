@@ -1,13 +1,14 @@
 from django.urls import URLPattern
 
 from saturn.options import SaturnAdmin
-from .models import TheModel
+from saturn.models import TheModel
+from rest_framework.serializers import SerializerMetaclass
 
 saturn_admin = SaturnAdmin(TheModel)
 
 
-def test_can_create_saturn_admin():
-    assert SaturnAdmin(TheModel)
+def test_can_instantiate_saturn_admin():
+    assert saturn_admin
 
 
 def test_model_admin_urls():
@@ -16,3 +17,17 @@ def test_model_admin_urls():
     """
     route = saturn_admin.urls[0]
     assert isinstance(route, URLPattern)
+
+
+def test_get_serializer():
+    """
+    An instance of ModelAdmin must be able to serialize its associated model data.
+    """
+    assert isinstance(saturn_admin.get_serializer(), SerializerMetaclass)
+
+
+def test_model_admin_serializer_model():
+    """
+    An instance of ModelAdminSerializer must dynamically build around the registered model.
+    """
+    assert saturn_admin.get_serializer().Meta.model == TheModel

@@ -4,7 +4,6 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 
 class SaturnAdmin:
-
     list_display = None
 
     def __init__(self, model):
@@ -15,14 +14,14 @@ class SaturnAdmin:
 
     def get_serializer(self):
         class ModelAdminSerializer(ModelSerializer):
-            list_display = SerializerMethodField()
+            listDisplay = SerializerMethodField()
 
             class Meta:
                 model = self.model
                 fields = '__all__'
 
-            def get_list_display(self, obj):
-                return str(obj) or self.list_display
+            def get_listDisplay(self, obj):
+                return str(obj) or self.listDisplay
 
         return ModelAdminSerializer
 
@@ -33,6 +32,11 @@ class SaturnAdmin:
 
         return [
             path(f'{app_label}/{model_name}/', ListCreateAPIView.as_view(
+                queryset=queryset,
+                serializer_class=self.get_serializer(),
+                model=self.model), name=f'{app_label}_{model_name}_changelist'),
+
+            path(f'{app_label}/{model_name}/add/', ListCreateAPIView.as_view(
                 queryset=queryset,
                 serializer_class=self.get_serializer(),
                 model=self.model))

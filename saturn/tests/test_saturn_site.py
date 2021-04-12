@@ -4,8 +4,7 @@ from rest_framework.utils import json
 
 from saturn.options import SaturnAdmin
 from saturn.sites import SaturnSite
-from saturn.tests.models import TheModel
-
+from saturn.models import TheModel
 
 saturn_site = SaturnSite()
 saturn_site.register(TheModel)
@@ -20,7 +19,7 @@ def test_saturn_site_can_register_model():
     assert isinstance(registered, SaturnAdmin)
 
 
-def test_urls_map_app_registered_models(client):
+def test_urls_map_app_registered_models():
     """
     An instance of SaturnSite must have a url property returning a list of url patterns.
     """
@@ -30,13 +29,6 @@ def test_urls_map_app_registered_models(client):
     assert isinstance(saturn_site.get_urls()[1], URLPattern)
     assert isinstance(saturn_site.get_urls()[2], URLResolver)
     assert saturn_site.get_urls()[2].url_patterns[0].name == 'saturn_themodel_changelist'
-
-    response = client.get('/saturn/api/saturn/themodel/')
-    print(response.content)
-    assert response.status_code == 200
-
-    content = json.loads(response.content)
-    assert content['model'] == 'saturn'
 
 
 def test_registered_models_api_has_app_list(client):

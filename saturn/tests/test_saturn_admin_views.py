@@ -1,17 +1,16 @@
-import json
 import pytest
 
-from saturn.options import SaturnAdmin
-from .models import TheModel
+from saturn.admin import site as saturn_admin
+from saturn.models import TheModel
 
-saturn_admin = SaturnAdmin(TheModel)
+saturn_admin.register([TheModel])
 
 
 @pytest.mark.parametrize("field", [
-    'model'
+    b'id', b'listDisplay', b'field'
 ])
-def test_changelist_view(rf, field):
-    request = rf.get('/saturn/model/')
-    response = saturn_admin.changelist_view(request)
-    content = json.loads(response.content)
-    assert content[field]
+def test_changelist_view(db, client, field):
+    TheModel.objects.create(field='Some Text')
+    response = client.get('/saturn/api/saturn/themodel/')
+    print(response.content)
+    assert field in response.content
