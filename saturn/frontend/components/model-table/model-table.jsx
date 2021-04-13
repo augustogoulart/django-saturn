@@ -19,7 +19,6 @@ function ModelTable(props){
   }, [])
 
   function columns() {
-    console.log(dataSource)
     return BuildColumns(dataSource, modelName, appName)
   }
 

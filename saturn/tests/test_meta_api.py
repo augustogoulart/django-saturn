@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from saturn.admin import site as saturn_admin
@@ -6,10 +8,8 @@ from saturn.models import TheModel
 saturn_admin.register([TheModel])
 
 
-@pytest.mark.parametrize("field", [
-    b'id', b'listDisplay', b'field'
-])
-def test_changelist_view(db, client, field):
+def test_meta_field_exists(db, client):
     TheModel.objects.create(field='Some Text')
     response = client.get('/saturn/api/saturn/themodel/')
-    assert field in response.content
+    json_response = json.loads(response.content)
+    assert json_response[1]['meta']

@@ -6,6 +6,6 @@ export const BuildColumns = (dataSource, modelName, appName) => {
     {
       title: modelName ,
       dataIndex: 'id',
-      render: (name, row) => <Link to={`/saturn/${appName}/${modelName}/${row.id}/change/`}>{row['list_display']}</Link>
+      render: (name, row) => <Link to={`/saturn/${appName}/${modelName}/${row.id}/change/`}>{row['listDisplay']}</Link>
     }
   ]}

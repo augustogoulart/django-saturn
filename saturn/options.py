@@ -3,6 +3,13 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 
+class ChangeListAPIView(ListCreateAPIView):
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, args, kwargs)
+        response.data.append({'meta': {'id': 'int', 'listDisplay': 'list', 'username': 'text'}})
+        return response
+
+
 class SaturnAdmin:
     list_display = None
 
@@ -31,7 +38,7 @@ class SaturnAdmin:
         app_label, model_name = self.opts.app_label, self.opts.model_name
 
         return [
-            path(f'{app_label}/{model_name}/', ListCreateAPIView.as_view(
+            path(f'{app_label}/{model_name}/', ChangeListAPIView.as_view(
                 queryset=queryset,
                 serializer_class=self.get_serializer(),
                 model=self.model), name=f'{app_label}_{model_name}_changelist'),
