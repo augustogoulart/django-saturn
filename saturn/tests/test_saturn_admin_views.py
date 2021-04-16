@@ -9,7 +9,19 @@ saturn_admin.register([TheModel])
 @pytest.mark.parametrize("field", [
     b'id', b'listDisplay', b'field'
 ])
-def test_changelist_view(db, client, field):
+def test_changelist_api_view(db, client, field):
     TheModel.objects.create(field='Some Text')
     response = client.get('/saturn/api/saturn/themodel/')
+    assert field in response.content
+
+
+@pytest.mark.parametrize("field", [
+    b'field'
+])
+def test_model_meta_api_view(db, client, field):
+    """
+    Test we can retrieve meta information about the model's instance.
+    """
+    TheModel.objects.create(field='Some Text')
+    response = client.get('/saturn/api/saturn/themodel/1/')
     assert field in response.content
