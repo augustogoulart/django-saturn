@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import Cookies from 'js-cookie'
 
 import {message, Form, Input, Button} from "antd";
@@ -18,37 +18,62 @@ const tailLayout = {
   },
 };
 
-function ChangeForm(props){
+function ChangeForm(props) {
   const modelName = props.match.params.modelName
   const appName = props.match.params.appName
   const id = props.match.params.id
 
+  const [data, setDate] = useState([])
+
   const CHANGE_URL = `/saturn/api/${appName}/${modelName}/${id}/change/`
 
-  useEffect(() => {fetch(CHANGE_URL)
-    .then(response => response.json())
-    .then(data => console.log(data))}, [])
+  useEffect(() => {
+    fetch(CHANGE_URL)
+      .then(response => response.json())
+      .then(data => setDate(data))
+  }, [])
 
   const [form] = Form.useForm();
 
-  function postFormData(values){
+  function postFormData(values) {
     const csrftoken = Cookies.get('csrftoken');
     const headers = new Headers();
     headers.append('X-CSRFToken', csrftoken);
     headers.append('Content-Type', 'application/json')
 
     fetch(CHANGE_URL, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(values),
       headers: headers,
       credentials: 'include',
     })
-      .then(()=> {message.success("New entry added");form.resetFields()})
+      .then(() => {
+        message.success("New entry added");
+        form.resetFields()
+      })
       .catch(() => message.error("Failed to create"))
   }
 
-  function onFinishFailed(errorInfo){
+  function onFinishFailed(errorInfo) {
     console.log('Failed:', errorInfo);
+  }
+
+  function getFormFields() {
+    const {meta} = data;
+    const fields = meta ? Object.keys(meta[0]) : []
+
+    return fields.map(
+      field => <
+        Form.Item
+        {...layout}
+        key={field}
+        label={field}
+        name={field}
+        rules={[{required: true}]}
+      >
+        <Input/>
+      </Form.Item>
+    )
   }
 
   return (
@@ -59,19 +84,7 @@ function ChangeForm(props){
       onFinish={postFormData}
       onFinishFailed={onFinishFailed}
     >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input/>
-      </Form.Item>
-
+      {getFormFields()}
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Submit

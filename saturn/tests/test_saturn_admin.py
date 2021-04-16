@@ -31,3 +31,12 @@ def test_model_admin_serializer_model():
     An instance of ModelAdminSerializer must dynamically build around the registered model.
     """
     assert saturn_admin.base_model_serializer().Meta.model == TheModel
+
+
+def test_get_change_serializer_meta():
+    """
+    An instance of ChangeModelSerializer must serialize meta information about the model so each field can be mapped
+    to its respective widget.
+    """
+    assert False
+

@@ -1,9 +1,6 @@
 from django.urls import path
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from rest_framework.response import Response
-
-
 
 
 class SaturnAdmin:
@@ -26,6 +23,7 @@ class SaturnAdmin:
 
             def get_listDisplay(self, obj):
                 return str(obj) or self.listDisplay
+
         return BaseModelAdminSerializer
 
     def get_list_serializer(self):
@@ -54,14 +52,14 @@ class SaturnAdmin:
 
             def get_meta(self, obj):
                 return [{
-                    'id': 'IntergerField',
                     'name': 'ChageField',
-                    'price': 'IntegerField'
+                    'price': 'IntegerField',
                 }]
 
             class Meta:
                 model = self.model
                 fields = '__all__'
+
         return ChangeModelSerializer
 
     def change_api_view(self):
