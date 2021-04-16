@@ -1,6 +1,9 @@
 from django.urls import path
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.response import Response
+
+
 
 
 class SaturnAdmin:
@@ -13,8 +16,20 @@ class SaturnAdmin:
         self.model_name = self.opts.model_name
         self.queryset = self.model.objects.all()
 
-    def get_model_serializer(self):
-        class ModelAdminSerializer(ModelSerializer):
+    def base_model_serializer(self):
+        class BaseModelAdminSerializer(ModelSerializer):
+            listDisplay = SerializerMethodField()
+
+            class Meta:
+                model = self.model
+                fields = '__all__'
+
+            def get_listDisplay(self, obj):
+                return str(obj) or self.listDisplay
+        return BaseModelAdminSerializer
+
+    def get_list_serializer(self):
+        class ListModelSerializer(self.base_model_serializer()):
             listDisplay = SerializerMethodField()
 
             class Meta:
@@ -24,18 +39,34 @@ class SaturnAdmin:
             def get_listDisplay(self, obj):
                 return str(obj) or self.listDisplay
 
-        return ModelAdminSerializer
+        return ListModelSerializer
 
     def changelist_api_view(self):
         class ChangeListAPIView(ListCreateAPIView):
-            serializer_class = self.get_model_serializer()
+            serializer_class = self.get_list_serializer()
             queryset = self.queryset
 
         return ChangeListAPIView
 
+    def get_change_serializer(self):
+        class ChangeModelSerializer(ModelSerializer):
+            meta = SerializerMethodField()
+
+            def get_meta(self, obj):
+                return [{
+                    'id': 'IntergerField',
+                    'name': 'ChageField',
+                    'price': 'IntegerField'
+                }]
+
+            class Meta:
+                model = self.model
+                fields = '__all__'
+        return ChangeModelSerializer
+
     def change_api_view(self):
         class ChangeAPIView(RetrieveUpdateDestroyAPIView):
-            serializer_class = self.get_model_serializer()
+            serializer_class = self.get_change_serializer()
             queryset = self.queryset
             lookup_url_kwarg = 'id'
 
@@ -52,7 +83,7 @@ class SaturnAdmin:
 
             path(f'{app_label}/{model_name}/add/', ListCreateAPIView.as_view(
                 queryset=queryset,
-                serializer_class=self.get_model_serializer(),
+                serializer_class=self.get_list_serializer(),
                 model=self.model)),
 
             path(f'{app_label}/{model_name}/<int:id>/change/', self.change_api_view().as_view(

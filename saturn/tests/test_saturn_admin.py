@@ -19,15 +19,15 @@ def test_model_admin_urls():
     assert isinstance(route, URLPattern)
 
 
-def test_get_serializer():
+def test_base_model_serializer():
     """
     An instance of ModelAdmin must be able to serialize its associated model data.
     """
-    assert isinstance(saturn_admin.get_model_serializer(), SerializerMetaclass)
+    assert isinstance(saturn_admin.base_model_serializer(), SerializerMetaclass)
 
 
 def test_model_admin_serializer_model():
     """
     An instance of ModelAdminSerializer must dynamically build around the registered model.
     """
-    assert saturn_admin.get_model_serializer().Meta.model == TheModel
+    assert saturn_admin.base_model_serializer().Meta.model == TheModel

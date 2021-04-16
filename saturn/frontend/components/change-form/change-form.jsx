@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Cookies from 'js-cookie'
 
 import {message, Form, Input, Button} from "antd";
@@ -21,6 +21,13 @@ const tailLayout = {
 function ChangeForm(props){
   const modelName = props.match.params.modelName
   const appName = props.match.params.appName
+  const id = props.match.params.id
+
+  const CHANGE_URL = `/saturn/api/${appName}/${modelName}/${id}/change/`
+
+  useEffect(() => {fetch(CHANGE_URL)
+    .then(response => response.json())
+    .then(data => console.log(data))}, [])
 
   const [form] = Form.useForm();
 
@@ -30,7 +37,7 @@ function ChangeForm(props){
     headers.append('X-CSRFToken', csrftoken);
     headers.append('Content-Type', 'application/json')
 
-    fetch(`/saturn/api/${appName}/${modelName}/add/`, {
+    fetch(CHANGE_URL, {
       method: 'POST',
       body: JSON.stringify(values),
       headers: headers,

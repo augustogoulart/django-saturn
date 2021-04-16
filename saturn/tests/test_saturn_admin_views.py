@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from saturn.admin import site as saturn_admin
@@ -15,13 +17,14 @@ def test_changelist_api_view(db, client, field):
     assert field in response.content
 
 
-@pytest.mark.parametrize("field", [
-    b'field'
+@pytest.mark.parametrize("fields", [
+    'meta'
 ])
-def test_model_meta_api_view(db, client, field):
+def test_model_meta_api_view(db, client, fields):
     """
     Test we can retrieve meta information about the model's instance.
     """
     TheModel.objects.create(field='Some Text')
-    response = client.get('/saturn/api/saturn/themodel/1/')
-    assert field in response.content
+    response = client.get('/saturn/api/saturn/themodel/1/change/')
+    content = json.loads(response.content)
+    assert content[fields]
