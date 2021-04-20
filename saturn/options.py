@@ -51,10 +51,7 @@ class SaturnAdmin:
             meta = SerializerMethodField()
 
             def get_meta(self, obj):
-                return [{
-                    'name': 'ChageField',
-                    'price': 'IntegerField',
-                }]
+                return {field.name: field.__class__.__name__ for field in obj._meta.get_fields()}
 
             class Meta:
                 model = self.model

@@ -1,3 +1,4 @@
+import pytest
 from django.urls import URLPattern
 
 from saturn.options import SaturnAdmin
@@ -33,10 +34,14 @@ def test_model_admin_serializer_model():
     assert saturn_admin.base_model_serializer().Meta.model == TheModel
 
 
-def test_get_change_serializer_meta():
+@pytest.mark.parametrize("meta_field", ["id", "field"])
+def test_get_change_serializer_meta(meta_field):
     """
     An instance of ChangeModelSerializer must serialize meta information about the model so each field can be mapped
     to its respective widget.
     """
-    assert False
+    the_object = TheModel()
+    serializer = saturn_admin.get_change_serializer()
+    meta = serializer(the_object).data.get('meta')
+    assert meta[meta_field]
 
