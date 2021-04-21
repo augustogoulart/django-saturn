@@ -11,6 +11,7 @@ const layout = {
     span: 4,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
     offset: 2,
@@ -59,8 +60,8 @@ function ChangeForm(props) {
   }
 
   function getFormFields() {
-    const {meta} = data;
-    const fields = meta ? Object.keys(meta[0]) : []
+    const {meta} = data
+    const fields = meta ? Object.keys(meta) : []
 
     return fields.map(
       field => <
