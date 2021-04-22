@@ -5,6 +5,7 @@ from saturn.options import SaturnAdmin
 from saturn.models import TheModel
 from rest_framework.serializers import SerializerMetaclass
 
+the_object = TheModel()
 saturn_admin = SaturnAdmin(TheModel)
 
 
@@ -34,14 +35,22 @@ def test_model_admin_serializer_model():
     assert saturn_admin.base_model_serializer().Meta.model == TheModel
 
 
-@pytest.mark.parametrize("meta_field", ["id", "field"])
+@pytest.mark.parametrize("meta_field", ["field"])
 def test_get_change_serializer_meta(meta_field):
     """
     An instance of ChangeModelSerializer must serialize meta information about the model so each field can be mapped
     to its respective widget.
     """
-    the_object = TheModel()
     serializer = saturn_admin.get_change_serializer()
     meta = serializer(the_object).data.get('meta')
     assert meta[meta_field]
 
+
+def test_id_not_listed_as_meta_fields():
+    """
+    ID should not be editable.
+    """
+    serializer = saturn_admin.get_change_serializer()
+    meta = serializer(the_object).data.get('meta')
+    with pytest.raises(KeyError):
+        assert meta['id']

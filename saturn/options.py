@@ -51,7 +51,11 @@ class SaturnAdmin:
             meta = SerializerMethodField()
 
             def get_meta(self, obj):
-                return {field.name: field.__class__.__name__ for field in obj._meta.get_fields()}
+                hidden_fields = ['id']
+                return {
+                    field.name: field.__class__.__name__ for field in obj._meta.get_fields()
+                    if field.name not in hidden_fields
+                }
 
             class Meta:
                 model = self.model

@@ -9,7 +9,7 @@ saturn_admin.register([TheModel])
 
 
 @pytest.mark.parametrize("field", [
-    b'id', b'listDisplay', b'field'
+     b'listDisplay', b'field'
 ])
 def test_changelist_api_view(db, client, field):
     TheModel.objects.create(field='Some Text')
