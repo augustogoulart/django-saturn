@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Cookies from 'js-cookie'
 
-import {message, Form, Input, Button} from "antd";
+import {message, Form, Input, Button, Divider} from "antd";
 
 const layout = {
   labelCol: {
@@ -9,27 +9,35 @@ const layout = {
   },
   wrapperCol: {
     span: 4,
+    offset: 2
   },
 };
 
 const tailLayout = {
   wrapperCol: {
-    offset: 2,
+    offset: 4,
     span: 8,
   },
 };
 
-function ChangeForm(props) {
+function Capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function AddChangeForm(props) {
+  const [data, setDate] = useState([])
+
   const modelName = props.match.params.modelName
   const appName = props.match.params.appName
   const id = props.match.params.id
 
-  const [data, setDate] = useState([])
-
   const CHANGE_URL = `/saturn/api/${appName}/${modelName}/${id}/change/`
+  const ADD_URL = `/saturn/api/${appName}/${modelName}/add/`
+
+  const URL = id ? CHANGE_URL : ADD_URL
 
   useEffect(() => {
-    fetch(CHANGE_URL)
+    fetch(URL)
       .then(response => response.json())
       .then(data => setDate(data))
   }, [])
@@ -42,7 +50,7 @@ function ChangeForm(props) {
     headers.append('X-CSRFToken', csrftoken);
     headers.append('Content-Type', 'application/json')
 
-    fetch(CHANGE_URL, {
+    fetch(URL, {
       method: 'PUT',
       body: JSON.stringify(values),
       headers: headers,
@@ -64,11 +72,11 @@ function ChangeForm(props) {
     const fields = meta ? Object.keys(meta) : []
 
     return fields.map(
-      field => <
-        Form.Item
+      field =>
+        <Form.Item
         {...layout}
         key={field}
-        label={field}
+        label={Capitalize(field)}
         name={field}
         rules={[{required: true}]}
       >
@@ -95,4 +103,4 @@ function ChangeForm(props) {
   );
 }
 
-export default ChangeForm;
+export default AddChangeForm;

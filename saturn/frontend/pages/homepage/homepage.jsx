@@ -20,7 +20,7 @@ function IndexPage() {
         state.appList.map(
           app =>
             <Table
-              style={{"padding": "3vh"}}
+              style={{"paddingBottom": "3vh"}}
               key={app.appLabel}
               rowKey={'name'}
               columns={[{
