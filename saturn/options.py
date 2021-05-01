@@ -1,13 +1,15 @@
-from django.urls import path
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
-from rest_framework.serializers import ModelSerializer, SerializerMethodField, Serializer
-from rest_framework import serializers
-from rest_framework.response import Response
 from django.http import JsonResponse
+from django.urls import path
+from rest_framework import status
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 
 class SaturnAdmin:
     list_display = None
+    hidden_fields = ['id']
 
     def __init__(self, model):
         self.model = model
@@ -60,30 +62,8 @@ class SaturnAdmin:
         return ChangeModelSerializer
 
     def get_model_fields(self):
-        return {field.name: field.__class__.__name__ for field in self.model._meta.get_fields()}
-
-    def meta_model_view(self):
-        # TODO - Temporary API until I figure a better way to return the meta fields.
-        fields = self.get_model_fields()
-
-        class MetaFields:
-            def __init__(self, fields):
-                for field in fields.keys():
-                    setattr(self, field, fields.get(field))
-
-        meta_fields = MetaFields(fields)
-
-        class MetaModelSerializer(Serializer):
-            name = serializers.JSONField()
-
-        class MetaModelFieldsView(GenericAPIView):
-            serializer_class = MetaModelSerializer
-
-            def get(self, request):
-                serializer = MetaModelSerializer(instance=meta_fields)
-                return Response(serializer.data)
-
-        return MetaModelFieldsView
+        return {field.name: field.__class__.__name__ for field in self.model._meta.get_fields()
+                if field.name not in self.hidden_fields}
 
     def changelist_api_view(self):
         class ChangeListAPIView(ListCreateAPIView):
@@ -100,9 +80,22 @@ class SaturnAdmin:
 
         return ChangeAPIView
 
-    def add_api_view(self, request):
-        fields = self.get_model_fields()
-        return JsonResponse({'meta': fields})
+    def add_api_view(self):
+        change_model_serializer = self.get_change_serializer()
+
+        class AddView(GenericAPIView):
+            def get(self, request, get_model_fields=self.get_model_fields):
+                fields = get_model_fields()
+                return JsonResponse({'meta': fields})
+
+            def post(self, request):
+                data = JSONParser().parse(request)
+                serializer = change_model_serializer(data=data)
+                if serializer.is_valid():
+                    serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return AddView
 
     @property
     def urls(self):
@@ -113,6 +106,5 @@ class SaturnAdmin:
                 model=self.model), name=f'{app_label}_{model_name}_changelist'),
             path(f'{app_label}/{model_name}/<int:id>/change/', self.change_api_view().as_view(
                 model=self.model), name=f'{app_label}_{model_name}_change'),
-            path(f'{app_label}/{model_name}/meta/', self.meta_model_view().as_view(model=self.model)),
-            path(f'{app_label}/{model_name}/add/', self.add_api_view)
+            path(f'{app_label}/{model_name}/add/', self.add_api_view().as_view(model=self.model))
         ]

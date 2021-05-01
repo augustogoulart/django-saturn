@@ -51,7 +51,7 @@ function AddChangeForm(props) {
     headers.append('Content-Type', 'application/json')
 
     fetch(URL, {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify(values),
       headers: headers,
       credentials: 'include',
