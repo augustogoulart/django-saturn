@@ -23,7 +23,7 @@ function ModelTable(props){
   }
 
   function onRowSelectionChange(selectedRowKeys){
-    setSelectedRowKeys({selectedRowKeys})
+    setSelectedRowKeys(selectedRowKeys)
   }
 
   function onDeleteAction(){
@@ -32,21 +32,21 @@ function ModelTable(props){
     headers.append('X-CSRFToken', csrftoken);
 
     fetch(`/saturn/api/${appName}/${modelName}/`, {
-      method: 'POST',
-      body: selectedRowKeys,
+      method: 'DELETE',
+      body: JSON.stringify({'selectedKeys': selectedRowKeys}),
       headers: headers,
       credentials: 'include'
     })
       .then(() => {
+        handleDelete(selectedRowKeys)
         message.success("Deleted");
-        handleDelete(data, selectedRowKeys)
       })
-      .catch(() => message.error("Failed to delete"))
+      .catch((error) => message.error(`Failed to delete: ${error}`))
   }
 
-  function handleDelete(data, selectedRowKeys){
-    const updatedDate = data.filter(item => !selectedRowKeys.includes(item.id))
-    setDataSource({data: updatedDate})
+  function handleDelete(){
+    const updatedDate = dataSource.filter(item => !selectedRowKeys.includes(item.id))
+    setDataSource(updatedDate)
   }
 
   const rowSelection = {

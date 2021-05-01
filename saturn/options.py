@@ -66,9 +66,19 @@ class SaturnAdmin:
                 if field.name not in self.hidden_fields}
 
     def changelist_api_view(self):
+        model = self.model
+
         class ChangeListAPIView(ListCreateAPIView):
             serializer_class = self.get_list_serializer()
             queryset = self.queryset
+
+            def delete(self, request):
+                model_ids = JSONParser().parse(request)
+
+                instance = model.objects.filter(id__in=model_ids.get('selectedKeys', []))
+                if instance:
+                    instance.delete()
+                    return JsonResponse({"status": "ok"}, status=status.HTTP_200_OK)
 
         return ChangeListAPIView
 
