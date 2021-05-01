@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.urls import path
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
@@ -93,17 +93,12 @@ class SaturnAdmin:
     def add_api_view(self):
         change_model_serializer = self.get_change_serializer()
 
-        class AddView(GenericAPIView):
+        class AddView(CreateAPIView):
+            serializer_class = change_model_serializer
+
             def get(self, request, get_model_fields=self.get_model_fields):
                 fields = get_model_fields()
-                return JsonResponse({'meta': fields})
-
-            def post(self, request):
-                data = JSONParser().parse(request)
-                serializer = change_model_serializer(data=data)
-                if serializer.is_valid():
-                    serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({'meta': fields})
 
         return AddView
 
