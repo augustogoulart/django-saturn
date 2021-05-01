@@ -25,21 +25,23 @@ function Capitalize(str) {
 }
 
 function AddChangeForm(props) {
-  const [data, setDate] = useState([])
+  const [data, setData] = useState([])
 
   const modelName = props.match.params.modelName
   const appName = props.match.params.appName
   const id = props.match.params.id
 
+
   const CHANGE_URL = `/saturn/api/${appName}/${modelName}/${id}/change/`
   const ADD_URL = `/saturn/api/${appName}/${modelName}/add/`
 
-  const URL = id ? CHANGE_URL : ADD_URL
+  const URL = id ? CHANGE_URL:ADD_URL
+  const METHOD = id ? 'PUT':'POST'
 
   useEffect(() => {
     fetch(URL)
       .then(response => response.json())
-      .then(data => setDate(data))
+      .then(data => setData(data))
   }, [])
 
   const [form] = Form.useForm();
@@ -51,14 +53,14 @@ function AddChangeForm(props) {
     headers.append('Content-Type', 'application/json')
 
     fetch(URL, {
-      method: 'POST',
+      method: METHOD,
       body: JSON.stringify(values),
       headers: headers,
       credentials: 'include',
     })
       .then(() => {
         message.success("New entry added");
-        form.resetFields()
+        const shouldResetFields = id ? null: form.resetFields()
       })
       .catch(() => message.error("Failed to create"))
   }
@@ -67,11 +69,19 @@ function AddChangeForm(props) {
     console.log('Failed:', errorInfo);
   }
 
+  function onInputChange(field, event) {
+    data[field] = event.target.value;
+    setData(data)
+  }
+
+  function getInputValue(field){
+    return data[field]
+  }
+
   function getFormFields() {
     const {meta} = data
-    const fields = meta ? Object.keys(meta) : []
-
-    return fields.map(
+    const formFields = meta ? Object.keys(meta) : []
+    return formFields.map(
       field =>
         <Form.Item
         {...layout}
@@ -79,8 +89,9 @@ function AddChangeForm(props) {
         label={Capitalize(field)}
         name={field}
         rules={[{required: true}]}
+        initialValue={getInputValue(field)}
       >
-        <Input/>
+        <Input onChange={(e) => onInputChange(field, e)}/>
       </Form.Item>
     )
   }
