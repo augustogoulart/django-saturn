@@ -107,9 +107,9 @@ class SaturnAdmin:
         app_label, model_name = self.opts.app_label, self.opts.model_name
 
         return [
-            path(f'{app_label}/{model_name}/', self.changelist_api_view().as_view(
-                model=self.model), name=f'{app_label}_{model_name}_changelist'),
-            path(f'{app_label}/{model_name}/<int:id>/change/', self.change_api_view().as_view(
-                model=self.model), name=f'{app_label}_{model_name}_change'),
-            path(f'{app_label}/{model_name}/add/', self.add_api_view().as_view(model=self.model))
+            path(f'{app_label}/{model_name}/', self.changelist_api_view().as_view(),
+                 name=f'{app_label}_{model_name}_changelist'),
+            path(f'{app_label}/{model_name}/<int:id>/change/', self.change_api_view().as_view(),
+                 name=f'{app_label}_{model_name}_change'),
+            path(f'{app_label}/{model_name}/add/', self.add_api_view().as_view())
         ]
