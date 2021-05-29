@@ -1,10 +1,10 @@
 import 'antd/dist/antd.css';
 import React, {useEffect, useState} from 'react';
 import STNApiClient from "../../lib/api";
-import {Link} from 'react-router-dom';
-import {Layout, Menu, Breadcrumb, Table} from 'antd';
+import {Layout, Menu, Breadcrumb} from 'antd';
 import {FileOutlined} from '@ant-design/icons';
 import {CollapsibleMenu} from "../../components/CollapsibleMenu";
+import {ModelTable} from "../../components/ModelTable";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -38,26 +38,6 @@ export function Home(): JSX.Element {
     setCollapsed(collapsed);
   }
 
-  function modelTable(): JSX.Element[] | null {
-    if (registered) {
-      return registered.appList.map(
-        app =>
-          <Table
-            style={{"paddingBottom": "3vh"}}
-            key={app.appLabel}
-            rowKey={'name'}
-            columns={[{
-              title: app.name,
-              key: app.appUrl,
-              dataIndex: "name",
-              render: (name, row) => <Link to={row['adminUrl']}>{name}</Link>
-            }]}
-            dataSource={app.models}
-            pagination={false}/>)
-    }
-    return null
-  }
-
   return (
     <Layout style={{minHeight: '100vh'}}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -76,9 +56,8 @@ export function Home(): JSX.Element {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
-          <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
-            {modelTable()}
-          </div>
+          <ModelTable appList={registered.appList}/>
+
         </Content>
         <Footer style={{textAlign: 'center'}}>Footer: Add Something here</Footer>
       </Layout>

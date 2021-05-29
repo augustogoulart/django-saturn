@@ -5,7 +5,6 @@ import React from "react";
 
 export function CollapsibleMenu({appList}: RegisteredList): JSX.Element | null {
   if (appList) {
-    console.log(appList)
     return (
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
         {
