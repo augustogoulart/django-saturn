@@ -16,6 +16,5 @@ test('Can access base url', function (){
 
 test('Can GET call the API', async function () {
   const response = await api.get('registered/')
-  console.log(response)
   expect(response).toBeTruthy()
 })

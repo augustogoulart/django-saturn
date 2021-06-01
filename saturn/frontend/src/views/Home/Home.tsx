@@ -2,7 +2,6 @@ import 'antd/dist/antd.css';
 import React, {useEffect, useState} from 'react';
 import STNApiClient from "../../lib/api";
 import {Layout, Menu, Breadcrumb} from 'antd';
-import {FileOutlined} from '@ant-design/icons';
 import {CollapsibleMenu} from "../../components/CollapsibleMenu";
 import {ModelTable} from "../../components/ModelTable";
 
@@ -27,11 +26,11 @@ export function Home(): JSX.Element {
   const [registered, setRegistered] = useState<RegisteredList>({appList: []})
 
   useEffect(() => {
-    async function getData() {
+    async function getRegistered() {
       await api.get('registered/').then((data: any) => setRegistered(data))
     }
 
-    getData()
+    getRegistered()
   }, [])
 
   function onCollapse(collapsed: boolean): void {
@@ -44,9 +43,6 @@ export function Home(): JSX.Element {
         <div className="logo"/>
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <CollapsibleMenu appList={registered.appList}/>
-          <Menu.Item key="9" icon={<FileOutlined/>}>
-            Files
-          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -57,7 +53,6 @@ export function Home(): JSX.Element {
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
           <ModelTable appList={registered.appList}/>
-
         </Content>
         <Footer style={{textAlign: 'center'}}>Footer: Add Something here</Footer>
       </Layout>

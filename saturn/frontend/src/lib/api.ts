@@ -1,7 +1,7 @@
 class STNApiClient {
   /**
    *  API client for Saturn Admin backend.
-   * @param baseUrl
+   * @param baseUrl: string
    */
   constructor(public baseUrl:string) {
     this.baseUrl = baseUrl
