@@ -3,8 +3,11 @@ class STNApiClient {
    *  API client for Saturn Admin backend.
    * @param baseUrl: string
    */
+  registeredUrl: string = 'registered/'
+
   constructor(public baseUrl:string) {
     this.baseUrl = baseUrl
+
   }
 
   get(url:string) {
@@ -16,6 +19,10 @@ class STNApiClient {
     } catch(error) {
       return error
     }
+  }
+
+  getRegistered(){
+    return this.get('registered/')
   }
 }
 

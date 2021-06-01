@@ -27,7 +27,7 @@ export function Home(): JSX.Element {
 
   useEffect(() => {
     async function getRegistered() {
-      await api.get('registered/').then((data: any) => setRegistered(data))
+      await api.getRegistered().then((data: any) => setRegistered(data))
     }
 
     getRegistered()

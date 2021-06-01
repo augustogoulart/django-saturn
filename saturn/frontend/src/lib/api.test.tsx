@@ -18,3 +18,12 @@ test('Can GET call the API', async function () {
   const response = await api.get('registered/')
   expect(response).toBeTruthy()
 })
+
+test('Can change registered API path', function (){
+  expect(api.registeredUrl).toBeTruthy()
+})
+
+test('Retrieve registered from SDK', async function () {
+  const response = await api.getRegistered()
+  expect(response).toBeTruthy()
+})
