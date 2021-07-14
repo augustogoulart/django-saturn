@@ -42,7 +42,7 @@ def test_get_change_serializer_meta(meta_field):
     to its respective widget.
     """
     serializer = saturn_admin.get_change_serializer()
-    meta = serializer(the_object).data.get('meta')
+    meta = serializer(the_object).data.get("meta")
     assert meta[meta_field]
 
 
@@ -51,6 +51,6 @@ def test_id_not_listed_as_meta_fields():
     ID should not be editable.
     """
     serializer = saturn_admin.get_change_serializer()
-    meta = serializer(the_object).data.get('meta')
+    meta = serializer(the_object).data.get("meta")
     with pytest.raises(KeyError):
-        assert meta['id']
+        assert meta["id"]
