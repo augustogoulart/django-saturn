@@ -8,7 +8,7 @@ export function ModelTable({appList}: RegisteredList): JSX.Element | null {
     return (
       <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
         {
-          appList.map((app:Registered) =>
+          appList.map((app: Registered) =>
             <Table
               style={{"paddingBottom": "3vh"}}
               key={app.appLabel}

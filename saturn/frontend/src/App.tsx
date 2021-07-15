@@ -1,5 +1,4 @@
-import {Route, Switch} from "react-router-dom";
-import {BrowserRouter} from "react-router-dom";
+import {Route, Switch, BrowserRouter} from "react-router-dom";
 
 import {Home} from "./views/Home/Home"
 import {InstalledApps} from "./views/InstalledApps/InstalledApps";
