@@ -1,8 +1,8 @@
-import { Registered, RegisteredList } from "../views/Home/Home";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import React from "react";
+import { Registered, RegisteredList } from "../types";
 
 export function CollapsibleMenu({
   appList,

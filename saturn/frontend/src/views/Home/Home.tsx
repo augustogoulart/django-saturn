@@ -4,21 +4,11 @@ import STNApiClient from "../../lib/api";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { CollapsibleMenu } from "../../components/CollapsibleMenu";
 import { ModelTable } from "../../components/ModelTable";
+import { RegisteredList } from "../../types";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const api = new STNApiClient("http://localhost:8000/saturn/api/");
-
-export interface Registered {
-  name: string;
-  appLabel: string;
-  appUrl: string;
-  models: [];
-}
-
-export interface RegisteredList {
-  appList: Registered[];
-}
 
 export function Home(): JSX.Element {
   const [collapsed, setCollapsed] = useState(false);

@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
-import { Registered, RegisteredList } from "../views/Home/Home";
+import { Registered, RegisteredList } from "../types";
 
 export function ModelTable({ appList }: RegisteredList): JSX.Element | null {
   if (appList) {
