@@ -15,7 +15,7 @@ export function App() {
         <Route
           exact
           path={`/${BASE_URL}/:appName`}
-          render={() => <InstalledApps />}
+          render={(props) => <InstalledApps {...props} />}
         />
       </Switch>
     </BrowserRouter>
